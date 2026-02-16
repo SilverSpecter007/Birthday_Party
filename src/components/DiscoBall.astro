@@ -1,0 +1,112 @@
+---
+// CSS/SVG disco ball element positioned in the upper right
+---
+<div class="disco-ball-wrapper" aria-hidden="true">
+  <div class="disco-string"></div>
+  <div class="disco-ball" style="animation: disco-sway 4s ease-in-out infinite;">
+    <div class="disco-ball-inner" style="animation: disco-rotate 8s linear infinite;">
+      <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="disco-grad" cx="35%" cy="35%">
+            <stop offset="0%" stop-color="#f0e68c" />
+            <stop offset="40%" stop-color="#c9a84c" />
+            <stop offset="100%" stop-color="#8a7030" />
+          </radialGradient>
+          <radialGradient id="highlight" cx="30%" cy="25%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.6)" />
+            <stop offset="100%" stop-color="transparent" />
+          </radialGradient>
+        </defs>
+        <!-- Ball body -->
+        <circle cx="50" cy="50" r="45" fill="url(#disco-grad)" />
+        <!-- Grid lines for disco effect -->
+        <g stroke="rgba(255,255,255,0.15)" stroke-width="0.5" fill="none">
+          <!-- Horizontal lines -->
+          <ellipse cx="50" cy="25" rx="38" ry="5" />
+          <ellipse cx="50" cy="35" rx="43" ry="5" />
+          <line x1="5" y1="50" x2="95" y2="50" />
+          <ellipse cx="50" cy="65" rx="43" ry="5" />
+          <ellipse cx="50" cy="75" rx="38" ry="5" />
+          <!-- Vertical lines -->
+          <ellipse cx="30" cy="50" rx="5" ry="43" />
+          <ellipse cx="40" cy="50" rx="5" ry="45" />
+          <ellipse cx="50" cy="50" rx="3" ry="45" />
+          <ellipse cx="60" cy="50" rx="5" ry="45" />
+          <ellipse cx="70" cy="50" rx="5" ry="43" />
+        </g>
+        <!-- Small highlight squares for mirror effect -->
+        <g fill="rgba(255,255,255,0.25)">
+          <rect x="25" y="30" width="4" height="3" rx="0.5" />
+          <rect x="38" y="22" width="5" height="3" rx="0.5" />
+          <rect x="55" y="35" width="4" height="3" rx="0.5" />
+          <rect x="30" y="45" width="5" height="4" rx="0.5" />
+          <rect x="62" y="48" width="4" height="3" rx="0.5" />
+          <rect x="45" y="58" width="5" height="3" rx="0.5" />
+          <rect x="35" y="65" width="4" height="3" rx="0.5" />
+          <rect x="58" y="62" width="4" height="3" rx="0.5" />
+          <rect x="48" y="40" width="3" height="3" rx="0.5" />
+          <rect x="68" y="38" width="3" height="3" rx="0.5" />
+          <rect x="22" y="55" width="4" height="3" rx="0.5" />
+          <rect x="72" y="55" width="3" height="3" rx="0.5" />
+        </g>
+        <!-- Specular highlight -->
+        <circle cx="50" cy="50" r="45" fill="url(#highlight)" />
+      </svg>
+    </div>
+    <!-- Light reflections -->
+    <div class="disco-reflection r1"></div>
+    <div class="disco-reflection r2"></div>
+    <div class="disco-reflection r3"></div>
+  </div>
+</div>
+
+<style>
+  .disco-ball-wrapper {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    z-index: 10;
+    transform-origin: top center;
+  }
+
+  .disco-string {
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(201, 168, 76, 0.3), rgba(201, 168, 76, 0.6));
+    margin: 0 auto;
+  }
+
+  .disco-ball {
+    position: relative;
+    transform-origin: top center;
+  }
+
+  .disco-ball-inner {
+    display: flex;
+    justify-content: center;
+  }
+
+  .disco-reflection {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(240, 230, 140, 0.6);
+    border-radius: 50%;
+    filter: blur(1px);
+    animation: twinkle 2s ease-in-out infinite;
+  }
+
+  .r1 { top: 10px; left: -15px; animation-delay: 0s; }
+  .r2 { top: 30px; right: -20px; animation-delay: 0.7s; }
+  .r3 { bottom: 5px; left: -10px; animation-delay: 1.4s; }
+
+  @media (max-width: 640px) {
+    .disco-ball-wrapper {
+      right: 1rem;
+    }
+    .disco-ball-wrapper svg {
+      width: 60px;
+      height: 60px;
+    }
+  }
+</style>

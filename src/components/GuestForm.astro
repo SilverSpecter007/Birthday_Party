@@ -1,0 +1,183 @@
+---
+import type { Guest } from '../lib/db';
+
+interface Props {
+  guest?: Guest;
+  mode: 'create' | 'edit';
+}
+
+const { guest, mode } = Astro.props;
+const isEdit = mode === 'edit';
+---
+<form id="guest-form" class="space-y-6 max-w-lg">
+  <div>
+    <label for="name" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
+      Name <span class="text-red-400">*</span>
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      value={guest?.name || ''}
+      class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+      placeholder="Name des Gastes"
+    />
+  </div>
+
+  <div>
+    <label for="email" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
+      E-Mail <span class="text-xs opacity-50">(optional)</span>
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      value={guest?.email || ''}
+      class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+      placeholder="gast@email.de"
+    />
+  </div>
+
+  <div class="flex items-center gap-3">
+    <input
+      type="checkbox"
+      id="plus_one"
+      name="plus_one"
+      checked={guest?.plus_one === 1}
+      class="w-4 h-4 accent-[var(--color-gold)]"
+    />
+    <label for="plus_one" class="text-sm text-[var(--color-cream)]">
+      Darf eine Begleitung mitbringen
+    </label>
+  </div>
+
+  {isEdit && guest && (
+    <div>
+      <label for="status" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
+        RSVP-Status
+      </label>
+      <select
+        id="status"
+        name="status"
+        class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+      >
+        <option value="pending" selected={guest.status === 'pending'}>Ausstehend</option>
+        <option value="accepted" selected={guest.status === 'accepted'}>Zugesagt</option>
+        <option value="declined" selected={guest.status === 'declined'}>Abgesagt</option>
+      </select>
+    </div>
+  )}
+
+  {isEdit && guest && (
+    <div class="admin-card space-y-3">
+      <h3 class="text-sm font-medium text-[var(--color-gold)]">Gast-Antwort</h3>
+      {guest.plus_one_name && (
+        <div class="text-sm">
+          <span class="text-[var(--color-cream)] opacity-60">Begleitung:</span>
+          <span class="text-[var(--color-cream)] ml-2">{guest.plus_one_name}</span>
+        </div>
+      )}
+      {guest.dietary && (
+        <div class="text-sm">
+          <span class="text-[var(--color-cream)] opacity-60">Ernährung:</span>
+          <span class="text-[var(--color-cream)] ml-2">{guest.dietary}</span>
+        </div>
+      )}
+      {guest.message && (
+        <div class="text-sm">
+          <span class="text-[var(--color-cream)] opacity-60">Nachricht:</span>
+          <span class="text-[var(--color-cream)] ml-2">{guest.message}</span>
+        </div>
+      )}
+      {guest.responded_at && (
+        <div class="text-xs text-[var(--color-cream)] opacity-40">
+          Antwort vom: {new Date(guest.responded_at).toLocaleString('de-DE')}
+        </div>
+      )}
+      {!guest.responded_at && (
+        <div class="text-xs text-[var(--color-cream)] opacity-40">
+          Noch keine Antwort erhalten.
+        </div>
+      )}
+    </div>
+  )}
+
+  <div class="flex gap-4">
+    <button
+      type="submit"
+      class="px-6 py-2 bg-[var(--color-gold)] text-[var(--color-bg-dark)] font-bold rounded-lg hover:bg-[var(--color-gold-light)] transition-colors cursor-pointer"
+    >
+      {isEdit ? 'Speichern' : 'Gast anlegen'}
+    </button>
+    <a
+      href="/admin"
+      class="px-6 py-2 border border-[var(--color-form-border)] text-[var(--color-cream)] rounded-lg hover:border-[var(--color-gold)] transition-colors"
+    >
+      Abbrechen
+    </a>
+  </div>
+</form>
+
+<div id="created-link" class="hidden mt-6 admin-card">
+  <p class="text-sm text-[var(--color-cream)] mb-2">Einladungslink:</p>
+  <div class="flex gap-2 items-center">
+    <code id="link-display" class="flex-1 text-[var(--color-gold)] bg-[rgba(0,0,0,0.3)] px-3 py-2 rounded text-sm break-all"></code>
+    <button
+      id="copy-created-link"
+      class="px-4 py-2 text-sm bg-[var(--color-gold)] text-[var(--color-bg-dark)] font-bold rounded hover:bg-[var(--color-gold-light)] transition-colors cursor-pointer"
+    >
+      Kopieren
+    </button>
+  </div>
+</div>
+
+<script define:vars={{ mode: mode, guestId: guest?.id || '' }}>
+  const form = document.getElementById('guest-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email') || '',
+      plus_one: formData.get('plus_one') === 'on' ? 1 : 0,
+    };
+
+    if (mode === 'edit') {
+      data.status = formData.get('status');
+    }
+
+    const url = mode === 'edit' ? `/api/admin/guests/${guestId}` : '/api/admin/guests';
+    const method = mode === 'edit' ? 'PUT' : 'POST';
+
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      if (mode === 'create') {
+        const result = await res.json();
+        const linkDiv = document.getElementById('created-link');
+        const linkDisplay = document.getElementById('link-display');
+        linkDisplay.textContent = result.link;
+        linkDiv.classList.remove('hidden');
+
+        document.getElementById('copy-created-link').addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(result.link);
+            document.getElementById('copy-created-link').textContent = 'Kopiert!';
+            setTimeout(() => { document.getElementById('copy-created-link').textContent = 'Kopieren'; }, 2000);
+          } catch {
+            prompt('Link kopieren:', result.link);
+          }
+        });
+      } else {
+        window.location.href = '/admin';
+      }
+    } else {
+      alert('Fehler beim Speichern.');
+    }
+  });
+</script>

@@ -1,0 +1,53 @@
+---
+import { EVENT } from '../lib/config';
+import type { Guest } from '../lib/db';
+
+interface Props {
+  guest: Guest;
+}
+
+const { guest } = Astro.props;
+---
+<div class="text-center space-y-8 pt-16 sm:pt-20 pb-8">
+  <!-- Main heading -->
+  <h1 class="glitter-text font-[var(--font-display)] text-4xl sm:text-5xl font-black leading-tight">
+    Du bist eingeladen!
+  </h1>
+
+  <!-- Personal greeting -->
+  <p class="font-[var(--font-script)] text-3xl sm:text-4xl text-[var(--color-gold)]">
+    Liebe/r {guest.name}
+  </p>
+
+  <!-- Event details -->
+  <div class="space-y-3 text-[var(--color-cream-light)]">
+    <p class="text-lg">{EVENT.subtitle}</p>
+    <div class="space-y-1">
+      <p class="text-xl font-[var(--font-display)] text-[var(--color-gold)]">
+        Am {EVENT.date_short}
+      </p>
+      <p class="text-lg">
+        in der <span class="font-semibold text-[var(--color-gold-light)]">{EVENT.location}</span>
+      </p>
+      {EVENT.time && <p class="text-lg">{EVENT.time}</p>}
+      {EVENT.address && <p class="text-sm opacity-70">{EVENT.address}</p>}
+    </div>
+    {EVENT.dresscode && (
+      <p class="text-sm opacity-80 mt-4">
+        Dresscode: <span class="text-[var(--color-gold)]">{EVENT.dresscode}</span>
+      </p>
+    )}
+  </div>
+
+  <!-- Hosts signature -->
+  <p class="font-[var(--font-script)] text-3xl text-[var(--color-gold)]">
+    {EVENT.hosts}
+  </p>
+
+  <!-- Divider -->
+  <div class="flex items-center justify-center gap-4 py-2">
+    <div class="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-gold)]"></div>
+    <div class="w-2 h-2 rounded-full bg-[var(--color-gold)] opacity-60"></div>
+    <div class="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-gold)]"></div>
+  </div>
+</div>

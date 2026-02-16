@@ -1,0 +1,112 @@
+---
+import type { Guest } from '../lib/db';
+import { EVENT } from '../lib/config';
+
+interface Props {
+  guests: Guest[];
+}
+
+const { guests } = Astro.props;
+---
+<div class="overflow-x-auto">
+  <table class="w-full text-sm text-left">
+    <thead class="text-xs uppercase text-[var(--color-gold)] border-b border-[var(--color-form-border)]">
+      <tr>
+        <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3">Begleitung</th>
+        <th class="px-4 py-3">Nachricht</th>
+        <th class="px-4 py-3">Link</th>
+        <th class="px-4 py-3">Aktionen</th>
+      </tr>
+    </thead>
+    <tbody>
+      {guests.length === 0 && (
+        <tr>
+          <td colspan="6" class="px-4 py-8 text-center text-[var(--color-cream)] opacity-60">
+            Noch keine Gäste angelegt.
+          </td>
+        </tr>
+      )}
+      {guests.map((guest) => (
+        <tr class="border-b border-[rgba(201,168,76,0.1)] hover:bg-[rgba(201,168,76,0.05)] transition-colors">
+          <td class="px-4 py-3 font-medium text-[var(--color-cream)]">
+            {guest.name}
+            {guest.email && <div class="text-xs opacity-50">{guest.email}</div>}
+          </td>
+          <td class="px-4 py-3">
+            {guest.status === 'accepted' && <span class="badge-accepted">Zugesagt</span>}
+            {guest.status === 'declined' && <span class="badge-declined">Abgesagt</span>}
+            {guest.status === 'pending' && <span class="badge-pending">Ausstehend</span>}
+          </td>
+          <td class="px-4 py-3 text-[var(--color-cream)]">
+            {guest.plus_one ? (
+              guest.plus_one_name ? guest.plus_one_name : <span class="opacity-50">Erlaubt</span>
+            ) : (
+              <span class="opacity-30">-</span>
+            )}
+          </td>
+          <td class="px-4 py-3 text-[var(--color-cream)] max-w-48 truncate">
+            {guest.message || <span class="opacity-30">-</span>}
+          </td>
+          <td class="px-4 py-3">
+            <button
+              class="copy-link-btn text-xs text-[var(--color-gold)] hover:text-[var(--color-gold-pale)] transition-colors cursor-pointer"
+              data-link={`${EVENT.base_url}/${guest.id}`}
+            >
+              Link kopieren
+            </button>
+          </td>
+          <td class="px-4 py-3">
+            <div class="flex gap-2">
+              <a
+                href={`/admin/guests/${guest.id}/edit`}
+                class="text-xs text-[var(--color-gold)] hover:text-[var(--color-gold-pale)] transition-colors"
+              >
+                Bearbeiten
+              </a>
+              <button
+                class="delete-guest-btn text-xs text-red-400 hover:text-red-300 transition-colors cursor-pointer"
+                data-id={guest.id}
+                data-name={guest.name}
+              >
+                Löschen
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.querySelectorAll('.copy-link-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const link = (btn as HTMLElement).dataset.link!;
+      try {
+        await navigator.clipboard.writeText(link);
+        const original = btn.textContent;
+        btn.textContent = 'Kopiert!';
+        setTimeout(() => { btn.textContent = original; }, 2000);
+      } catch {
+        prompt('Link kopieren:', link);
+      }
+    });
+  });
+
+  document.querySelectorAll('.delete-guest-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = (btn as HTMLElement).dataset.id!;
+      const name = (btn as HTMLElement).dataset.name!;
+      if (!confirm(`"${name}" wirklich löschen?`)) return;
+
+      const res = await fetch(`/api/admin/guests/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        alert('Fehler beim Löschen.');
+      }
+    });
+  });
+</script>

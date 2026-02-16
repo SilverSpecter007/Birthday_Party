@@ -1,0 +1,26 @@
+---
+import InvitationLayout from '../layouts/InvitationLayout.astro';
+import InvitationCard from '../components/InvitationCard.astro';
+import RsvpForm from '../components/RsvpForm.astro';
+import { getGuest } from '../lib/db';
+import { EVENT } from '../lib/config';
+
+const { guestId } = Astro.params;
+
+// Prevent matching admin routes and API routes
+if (!guestId || guestId === 'admin' || guestId === 'api') {
+  return Astro.redirect('/404');
+}
+
+const guest = getGuest(guestId);
+
+if (!guest) {
+  return Astro.redirect('/404');
+}
+---
+<InvitationLayout title={`Einladung für ${guest.name} - ${EVENT.hosts}`}>
+  <InvitationCard guest={guest} />
+  <div class="px-2">
+    <RsvpForm guest={guest} />
+  </div>
+</InvitationLayout>

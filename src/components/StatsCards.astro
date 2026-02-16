@@ -1,0 +1,31 @@
+---
+interface Props {
+  total: number;
+  accepted: number;
+  declined: number;
+  pending: number;
+  plusOnes: number;
+}
+
+const { total, accepted, declined, pending, plusOnes } = Astro.props;
+---
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+  <div class="admin-card text-center">
+    <div class="text-3xl font-bold text-[var(--color-gold)] font-[var(--font-display)]">{total}</div>
+    <div class="text-sm text-[var(--color-cream)] mt-1">Gesamt</div>
+  </div>
+  <div class="admin-card text-center">
+    <div class="text-3xl font-bold text-green-400 font-[var(--font-display)]">{accepted}</div>
+    <div class="text-sm text-[var(--color-cream)] mt-1">
+      Zusagen {plusOnes > 0 && <span class="text-xs opacity-70">(+ {plusOnes} Begl.)</span>}
+    </div>
+  </div>
+  <div class="admin-card text-center">
+    <div class="text-3xl font-bold text-red-400 font-[var(--font-display)]">{declined}</div>
+    <div class="text-sm text-[var(--color-cream)] mt-1">Absagen</div>
+  </div>
+  <div class="admin-card text-center">
+    <div class="text-3xl font-bold text-yellow-400 font-[var(--font-display)]">{pending}</div>
+    <div class="text-sm text-[var(--color-cream)] mt-1">Ausstehend</div>
+  </div>
+</div>
