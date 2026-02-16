@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: #0a0f0a;
+  --color-bg-dark-lighter: #111a11;
+  --color-gold: #c9a84c;
+  --color-gold-light: #d4b65a;
+  --color-gold-pale: #f0e68c;
+  --color-cream: #e8dcc8;
+  --color-cream-light: #f0e6d4;
+  --color-emerald-accent: #2a5a3a;
+  --color-form-bg: rgba(201, 168, 76, 0.08);
+  --color-form-border: rgba(201, 168, 76, 0.4);
+
+  --font-display: "Playfair Display", serif;
+  --font-script: "Great Vibes", cursive;
+  --font-body: "Lato", sans-serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    color: var(--color-cream);
+    background-color: var(--color-bg-dark);
+  }
+
+  body {
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Glitter shimmer text effect */
+.glitter-text {
+  background: linear-gradient(
+    135deg,
+    #c9a84c 0%,
+    #f0e68c 25%,
+    #c9a84c 50%,
+    #f0e68c 75%,
+    #c9a84c 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Sparkle twinkle animation */
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes twinkle-bright {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, var(--color-gold-pale) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: twinkle var(--duration, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.sparkle-bright {
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff 0%, var(--color-gold-pale) 40%, transparent 70%);
+  animation-name: twinkle-bright;
+}
+
+/* Vignette overlay */
+.vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(5, 8, 5, 0.4) 70%,
+    rgba(5, 8, 5, 0.8) 100%
+  );
+}
+
+/* Disco ball rotation */
+@keyframes disco-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes disco-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* Floating particles */
+@keyframes float-up {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: float-up var(--duration, 12s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Success flash animation */
+@keyframes success-flash {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.success-flash {
+  animation: success-flash 0.5s ease-out;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glitter-text {
+    animation: none;
+  }
+
+  .sparkle,
+  .sparkle-bright,
+  .particle {
+    animation: none;
+    opacity: 0.5;
+  }
+
+  .disco-ball-inner {
+    animation: none;
+  }
+}
+
+/* Admin styles */
+.admin-card {
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.badge-accepted {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-declined {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-pending {
+  background: rgba(234, 179, 8, 0.2);
+  color: #facc15;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

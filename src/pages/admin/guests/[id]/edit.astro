@@ -1,0 +1,24 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import GuestForm from '../../../../components/GuestForm.astro';
+import { getGuest } from '../../../../lib/db';
+import { EVENT } from '../../../../lib/config';
+
+const { id } = Astro.params;
+const guest = id ? getGuest(id) : undefined;
+
+if (!guest) {
+  return Astro.redirect('/admin');
+}
+---
+<AdminLayout title={`${guest.name} bearbeiten`}>
+  <div class="mb-6">
+    <h1 class="font-[var(--font-display)] text-3xl text-[var(--color-gold)]">
+      {guest.name} bearbeiten
+    </h1>
+    <p class="text-sm text-[var(--color-cream)] opacity-60 mt-2">
+      Einladungslink: <code class="text-[var(--color-gold)]">{EVENT.base_url}/{guest.id}</code>
+    </p>
+  </div>
+  <GuestForm mode="edit" guest={guest} />
+</AdminLayout>

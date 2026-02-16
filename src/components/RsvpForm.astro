@@ -1,0 +1,227 @@
+---
+import type { Guest } from '../lib/db';
+
+interface Props {
+  guest: Guest;
+}
+
+const { guest } = Astro.props;
+const hasResponded = guest.status !== 'pending';
+---
+<div id="rsvp-section">
+  <!-- Already responded view -->
+  {hasResponded && (
+    <div id="response-display" class="text-center space-y-4">
+      {guest.status === 'accepted' ? (
+        <div class="space-y-2">
+          <p class="text-2xl">&#x1F389;</p>
+          <p class="text-xl font-[var(--font-display)] text-[var(--color-gold)]">Du hast zugesagt!</p>
+          <p class="text-sm text-[var(--color-cream)] opacity-70">Wir freuen uns auf dich!</p>
+        </div>
+      ) : (
+        <div class="space-y-2">
+          <p class="text-xl font-[var(--font-display)] text-[var(--color-cream)]">Du hast abgesagt.</p>
+          <p class="text-sm text-[var(--color-cream)] opacity-70">Schade, vielleicht beim nächsten Mal!</p>
+        </div>
+      )}
+      <button
+        id="change-response-btn"
+        class="text-sm text-[var(--color-gold)] hover:text-[var(--color-gold-pale)] underline transition-colors cursor-pointer"
+      >
+        Antwort ändern
+      </button>
+    </div>
+  )}
+
+  <!-- RSVP Form -->
+  <div id="rsvp-form-container" class={hasResponded ? 'hidden' : ''}>
+    <form id="rsvp-form" class="space-y-6">
+      <!-- Status buttons -->
+      <div class="space-y-3">
+        <p class="text-center text-sm text-[var(--color-cream)] opacity-80">Kommst du?</p>
+        <div class="flex gap-4">
+          <button
+            type="button"
+            id="btn-accept"
+            class="rsvp-choice-btn flex-1 py-3 px-4 border-2 border-[var(--color-gold)] rounded-lg text-[var(--color-gold)] font-bold transition-all hover:bg-[var(--color-gold)] hover:text-[var(--color-bg-dark)] cursor-pointer"
+            data-status="accepted"
+          >
+            Ich bin dabei! &#x1F389;
+          </button>
+          <button
+            type="button"
+            id="btn-decline"
+            class="rsvp-choice-btn flex-1 py-3 px-4 border-2 border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] font-bold transition-all hover:bg-[rgba(201,168,76,0.1)] cursor-pointer"
+            data-status="declined"
+          >
+            Leider nicht &#x1F622;
+          </button>
+        </div>
+      </div>
+
+      <!-- Plus one field (shown when accepted and plus_one allowed) -->
+      <div id="plus-one-field" class="hidden">
+        <label for="plus_one_name" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
+          Name deiner Begleitung <span class="text-xs opacity-50">(optional)</span>
+        </label>
+        <input
+          type="text"
+          id="plus_one_name"
+          name="plus_one_name"
+          value={guest.plus_one_name || ''}
+          class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+          placeholder="Name deiner Begleitung"
+        />
+      </div>
+
+      <!-- Dietary field -->
+      <div id="dietary-field" class="hidden">
+        <label for="dietary" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
+          Ernährungsbesonderheiten <span class="text-xs opacity-50">(optional)</span>
+        </label>
+        <input
+          type="text"
+          id="dietary"
+          name="dietary"
+          value={guest.dietary || ''}
+          class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+          placeholder="z.B. vegetarisch, Allergien..."
+        />
+      </div>
+
+      <!-- Message field -->
+      <div id="message-field" class="hidden">
+        <label for="message" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
+          Nachricht an uns <span class="text-xs opacity-50">(optional)</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows="3"
+          class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors resize-none"
+          placeholder="Deine Nachricht..."
+        >{guest.message || ''}</textarea>
+      </div>
+
+      <!-- Submit button -->
+      <div id="submit-section" class="hidden">
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full py-3 bg-[var(--color-gold)] text-[var(--color-bg-dark)] font-bold text-lg rounded-lg hover:bg-[var(--color-gold-light)] transition-colors cursor-pointer"
+        >
+          Antwort absenden
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Success message -->
+  <div id="success-message" class="hidden text-center space-y-4 success-flash">
+    <p class="text-2xl">&#x2728;</p>
+    <p class="text-xl font-[var(--font-display)] text-[var(--color-gold)]" id="success-text"></p>
+    <p class="text-sm text-[var(--color-cream)] opacity-70" id="success-subtext"></p>
+  </div>
+</div>
+
+<script define:vars={{ guestId: guest.id, allowPlusOne: guest.plus_one === 1, currentStatus: guest.status }}>
+  let selectedStatus = null;
+
+  const btnAccept = document.getElementById('btn-accept');
+  const btnDecline = document.getElementById('btn-decline');
+  const plusOneField = document.getElementById('plus-one-field');
+  const dietaryField = document.getElementById('dietary-field');
+  const messageField = document.getElementById('message-field');
+  const submitSection = document.getElementById('submit-section');
+  const form = document.getElementById('rsvp-form');
+  const formContainer = document.getElementById('rsvp-form-container');
+  const responseDisplay = document.getElementById('response-display');
+  const successMessage = document.getElementById('success-message');
+  const changeBtn = document.getElementById('change-response-btn');
+
+  function selectStatus(status) {
+    selectedStatus = status;
+
+    if (status === 'accepted') {
+      btnAccept.classList.add('bg-[var(--color-gold)]', 'text-[var(--color-bg-dark)]');
+      btnDecline.classList.remove('bg-[rgba(201,168,76,0.1)]');
+      btnDecline.classList.add('opacity-50');
+      btnAccept.classList.remove('opacity-50');
+
+      if (allowPlusOne) plusOneField.classList.remove('hidden');
+      dietaryField.classList.remove('hidden');
+    } else {
+      btnDecline.classList.add('bg-[rgba(201,168,76,0.1)]');
+      btnAccept.classList.remove('bg-[var(--color-gold)]', 'text-[var(--color-bg-dark)]');
+      btnAccept.classList.add('opacity-50');
+      btnDecline.classList.remove('opacity-50');
+
+      plusOneField.classList.add('hidden');
+      dietaryField.classList.add('hidden');
+    }
+
+    messageField.classList.remove('hidden');
+    submitSection.classList.remove('hidden');
+  }
+
+  btnAccept.addEventListener('click', () => selectStatus('accepted'));
+  btnDecline.addEventListener('click', () => selectStatus('declined'));
+
+  if (changeBtn) {
+    changeBtn.addEventListener('click', () => {
+      responseDisplay.classList.add('hidden');
+      formContainer.classList.remove('hidden');
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!selectedStatus) return;
+
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wird gesendet...';
+
+    const data = {
+      guestId,
+      status: selectedStatus,
+      plusOneName: document.getElementById('plus_one_name')?.value || '',
+      dietary: document.getElementById('dietary')?.value || '',
+      message: document.getElementById('message')?.value || '',
+    };
+
+    try {
+      const res = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        formContainer.classList.add('hidden');
+        if (responseDisplay) responseDisplay.classList.add('hidden');
+
+        const successText = document.getElementById('success-text');
+        const successSubtext = document.getElementById('success-subtext');
+
+        if (selectedStatus === 'accepted') {
+          successText.textContent = 'Vielen Dank für deine Zusage!';
+          successSubtext.textContent = 'Wir freuen uns auf dich!';
+        } else {
+          successText.textContent = 'Danke für deine Rückmeldung!';
+          successSubtext.textContent = 'Schade, dass du nicht dabei sein kannst.';
+        }
+
+        successMessage.classList.remove('hidden');
+      } else {
+        alert('Fehler beim Senden. Bitte versuche es erneut.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Antwort absenden';
+      }
+    } catch {
+      alert('Verbindungsfehler. Bitte versuche es erneut.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Antwort absenden';
+    }
+  });
+</script>
