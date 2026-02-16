@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Datenschutz | Salon Dueball">
+  <Navigation />
+  <main class="pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="decorative-line mb-4"></div>
+      <h1 class="text-4xl md:text-5xl font-display font-semibold text-salon-dark mb-10">
+        Datenschutz&shy;erkl&auml;rung
+      </h1>
+
+      <div class="prose prose-warm max-w-none space-y-8 text-warm-600">
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            1. Datenschutz auf einen Blick
+          </h2>
+          <h3 class="text-lg font-semibold text-salon-dark mb-2">Allgemeine Hinweise</h3>
+          <p>
+            Die folgenden Hinweise geben einen einfachen &Uuml;berblick dar&uuml;ber, was mit Ihren
+            personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten
+            sind alle Daten, mit denen Sie pers&ouml;nlich identifiziert werden k&ouml;nnen.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            2. Verantwortliche Stelle
+          </h2>
+          <p>
+            Salon Dueball<br />
+            Inh. Annika Dueball<br />
+            Jahnstra&szlig;e 3<br />
+            21279 Hollenstedt<br />
+            Telefon: 04165 / 88 33
+          </p>
+          <p>
+            Verantwortliche Stelle ist die nat&uuml;rliche oder juristische Person, die allein oder gemeinsam
+            mit anderen &uuml;ber die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            3. Datenerfassung auf dieser Website
+          </h2>
+          <h3 class="text-lg font-semibold text-salon-dark mb-2">Server-Log-Dateien</h3>
+          <p>
+            Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten
+            Server-Log-Dateien, die Ihr Browser automatisch an uns &uuml;bermittelt. Dies sind:
+          </p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Browsertyp und Browserversion</li>
+            <li>Verwendetes Betriebssystem</li>
+            <li>Referrer URL</li>
+            <li>Hostname des zugreifenden Rechners</li>
+            <li>Uhrzeit der Serveranfrage</li>
+            <li>IP-Adresse</li>
+          </ul>
+          <p>
+            Eine Zusammenf&uuml;hrung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            4. Externe Dienste
+          </h2>
+          <h3 class="text-lg font-semibold text-salon-dark mb-2">Google Maps</h3>
+          <p>
+            Diese Seite nutzt den Kartendienst Google Maps. Anbieter ist die Google Ireland Limited,
+            Gordon House, Barrow Street, Dublin 4, Irland. Zur Nutzung der Funktionen von Google Maps
+            ist es notwendig, Ihre IP-Adresse zu speichern. Diese Informationen werden in der Regel an
+            einen Server von Google in den USA &uuml;bertragen und dort gespeichert.
+          </p>
+          <h3 class="text-lg font-semibold text-salon-dark mb-2 mt-4">Google Fonts</h3>
+          <p>
+            Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten sogenannte Google Fonts,
+            die von Google bereitgestellt werden. Beim Aufruf einer Seite l&auml;dt Ihr Browser die
+            ben&ouml;tigten Fonts in Ihren Browsercache, um Texte und Schriftarten korrekt darzustellen.
+          </p>
+          <h3 class="text-lg font-semibold text-salon-dark mb-2 mt-4">Online-Terminbuchung (Shore)</h3>
+          <p>
+            F&uuml;r die Online-Terminbuchung nutzen wir den Dienst Shore GmbH. Wenn Sie einen Termin
+            &uuml;ber das Buchungssystem vereinbaren, werden die von Ihnen eingegebenen Daten an Shore
+            &uuml;bermittelt und dort verarbeitet.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            5. Ihre Rechte
+          </h2>
+          <p>
+            Sie haben jederzeit das Recht, unentgeltlich Auskunft &uuml;ber Herkunft, Empf&auml;nger
+            und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben au&szlig;erdem
+            ein Recht, die Berichtigung oder L&ouml;schung dieser Daten zu verlangen. Wenn Sie eine
+            Einwilligung zur Datenverarbeitung erteilt haben, k&ouml;nnen Sie diese jederzeit
+            widerrufen. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz k&ouml;nnen Sie sich
+            jederzeit an uns wenden.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <a href="/" class="btn-outline">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Zur&uuml;ck zur Startseite
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,101 @@
+---
+const services = [
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M14.121 14.121A3 3 0 109.88 9.88m4.242 4.242L9.88 9.88m4.242 4.242l2.121 2.121M9.88 9.88L7.758 7.758M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>`,
+    title: 'Schnitt & Styling',
+    description: 'Von klassisch bis modern \u2013 individuelle Haarschnitte f\u00fcr Damen, Herren und Kinder. Mit Waschen, Schneiden und Styling.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+    </svg>`,
+    title: 'Colorationen',
+    description: 'Professionelle Haarfarben mit L\'Or\u00e9al Professionnel. Ob dezente Ver\u00e4nderung oder kompletter Farbwechsel \u2013 wir finden Ihren perfekten Ton.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+    </svg>`,
+    title: 'Balayage & Str\u00e4hnen',
+    description: 'Nat\u00fcrlich flie\u00dfende Farbverl\u00e4ufe mit Balayage oder klassische Str\u00e4hnentechniken f\u00fcr einen strahlenden Look.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+    </svg>`,
+    title: 'Hei\u00dfe Schere',
+    description: 'Schonender Schnitt mit der hei\u00dfen Schere \u2013 versiegelt die Haarspitzen und sorgt f\u00fcr gesundes, gl\u00e4nzendes Haar.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+    </svg>`,
+    title: 'Haarverdichtung & Extensions',
+    description: 'Mehr F\u00fclle, L\u00e4nge und Volumen mit hochwertigen Tressen. F\u00fcr nat\u00fcrlich aussehendes, traumhaft sch\u00f6nes Haar.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+    </svg>`,
+    title: 'Brow Lifting',
+    description: 'Semi-permanentes Augenbrauen-Lifting f\u00fcr perfekt geformte, volle Brauen. Der Trend-Look f\u00fcr einen ausdrucksstarken Blick.',
+  },
+];
+---
+
+<section id="leistungen" class="section-padding bg-white">
+  <div class="container-narrow">
+    <!-- Section Header -->
+    <div class="text-center mb-16 md:mb-20">
+      <div class="decorative-line mx-auto mb-4"></div>
+      <h2 class="text-4xl md:text-5xl font-display font-semibold text-salon-dark mb-6">
+        Unsere Leistungen
+      </h2>
+      <p class="text-lg text-warm-500 max-w-2xl mx-auto">
+        Ob frischer Schnitt, neue Farbe oder besonderer Anlass &ndash; wir bieten Ihnen
+        das volle Programm f&uuml;r Ihr perfektes Styling.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {services.map((service) => (
+        <div class="group p-8 rounded-2xl bg-salon-cream/50 border border-warm-100
+                    hover:bg-white hover:shadow-xl hover:shadow-warm-100/50
+                    transition-all duration-500 hover:-translate-y-1">
+          <div class="w-14 h-14 rounded-xl bg-salon-gold/10 flex items-center justify-center
+                      text-salon-gold mb-6 group-hover:bg-salon-gold/20 transition-colors duration-300"
+               set:html={service.icon} />
+          <h3 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            {service.title}
+          </h3>
+          <p class="text-warm-500 leading-relaxed">
+            {service.description}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-16">
+      <a
+        href="https://connect.shore.com/bookings/friseur-christina-aldag/services?locale=de"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary text-base"
+      >
+        Alle Services & Preise ansehen
+      </a>
+    </div>
+  </div>
+</section>

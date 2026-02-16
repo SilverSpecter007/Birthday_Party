@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Impressum | Salon Dueball">
+  <Navigation />
+  <main class="pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="decorative-line mb-4"></div>
+      <h1 class="text-4xl md:text-5xl font-display font-semibold text-salon-dark mb-10">
+        Impressum
+      </h1>
+
+      <div class="prose prose-warm max-w-none space-y-8 text-warm-600">
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            Angaben gem&auml;&szlig; &sect; 5 TMG
+          </h2>
+          <p>
+            Salon Dueball<br />
+            Inh. Annika Dueball<br />
+            Jahnstra&szlig;e 3<br />
+            21279 Hollenstedt
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">Kontakt</h2>
+          <p>
+            Telefon: <a href="tel:+4941658833" class="text-salon-gold hover:underline">04165 / 88 33</a><br />
+            Website: <a href="https://www.friseur-hollenstedt.de" class="text-salon-gold hover:underline">www.friseur-hollenstedt.de</a>
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            Berufsbezeichnung
+          </h2>
+          <p>
+            Friseurmeisterin<br />
+            Verliehen in der Bundesrepublik Deutschland
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-display font-semibold text-salon-dark mb-3">
+            Streitschlichtung
+          </h2>
+          <p>
+            Die Europ&auml;ische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+            <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer"
+               class="text-salon-gold hover:underline break-all">
+              https://ec.europa.eu/consumers/odr/
+            </a>
+          </p>
+          <p>
+            Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+            Verbraucherschlichtungsstelle teilzunehmen.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <a href="/" class="btn-outline">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Zur&uuml;ck zur Startseite
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

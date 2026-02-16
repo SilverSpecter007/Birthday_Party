@@ -1,0 +1,146 @@
+---
+const navLinks = [
+  { href: '#leistungen', label: 'Leistungen' },
+  { href: '#ueber-uns', label: '\u00dcber uns' },
+  { href: '#galerie', label: 'Galerie' },
+  { href: '#oeffnungszeiten', label: '\u00d6ffnungszeiten' },
+  { href: '#kontakt', label: 'Kontakt' },
+];
+---
+
+<header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20 md:h-24">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-salon-dark flex items-center justify-center
+                    group-hover:bg-warm-800 transition-colors duration-300">
+          <span class="text-salon-gold font-display text-sm font-semibold">SD</span>
+        </div>
+        <div class="hidden sm:block">
+          <span class="font-display text-xl font-semibold text-salon-dark">Salon Dueball</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-8">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm font-medium text-warm-700 hover:text-salon-dark transition-colors duration-300
+                   relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5
+                   after:bg-salon-gold after:transition-all after:duration-300 hover:after:w-full"
+          >
+            {link.label}
+          </a>
+        ))}
+        <a
+          href="https://connect.shore.com/bookings/friseur-christina-aldag/services?locale=de"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary text-sm"
+        >
+          Termin buchen
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        class="lg:hidden flex flex-col gap-1.5 p-2"
+        aria-label="Men\u00fc \u00f6ffnen"
+        aria-expanded="false"
+      >
+        <span class="hamburger-line w-6 h-0.5 bg-salon-dark transition-all duration-300 origin-center"></span>
+        <span class="hamburger-line w-6 h-0.5 bg-salon-dark transition-all duration-300"></span>
+        <span class="hamburger-line w-4 h-0.5 bg-salon-dark transition-all duration-300 origin-center"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden fixed inset-0 top-20 bg-salon-cream/98 backdrop-blur-lg -translate-x-full
+           transition-transform duration-500 ease-in-out z-40"
+  >
+    <div class="flex flex-col items-center justify-center h-full gap-8 pb-20">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="mobile-link text-2xl font-display font-medium text-salon-dark
+                 hover:text-salon-gold transition-colors duration-300"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="https://connect.shore.com/bookings/friseur-christina-aldag/services?locale=de"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary text-lg mt-4"
+      >
+        Termin buchen
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const hamburgerLines = document.querySelectorAll('.hamburger-line');
+  let menuOpen = false;
+
+  // Scroll effect for navigation
+  function handleScroll() {
+    if (!nav) return;
+    if (window.scrollY > 50) {
+      nav.classList.add('bg-salon-cream/95', 'backdrop-blur-md', 'shadow-sm');
+    } else {
+      nav.classList.remove('bg-salon-cream/95', 'backdrop-blur-md', 'shadow-sm');
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // Mobile menu toggle
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    if (mobileMenu) {
+      mobileMenu.classList.toggle('-translate-x-full', !menuOpen);
+      mobileMenu.classList.toggle('translate-x-0', menuOpen);
+    }
+    if (mobileBtn) {
+      mobileBtn.setAttribute('aria-expanded', String(menuOpen));
+    }
+    document.body.classList.toggle('overflow-hidden', menuOpen);
+
+    // Animate hamburger
+    if (hamburgerLines.length === 3) {
+      if (menuOpen) {
+        (hamburgerLines[0] as HTMLElement).style.transform = 'rotate(45deg) translate(4px, 4px)';
+        (hamburgerLines[1] as HTMLElement).style.opacity = '0';
+        (hamburgerLines[2] as HTMLElement).style.transform = 'rotate(-45deg) translate(2px, -2px)';
+        (hamburgerLines[2] as HTMLElement).style.width = '1.5rem';
+      } else {
+        (hamburgerLines[0] as HTMLElement).style.transform = '';
+        (hamburgerLines[1] as HTMLElement).style.opacity = '1';
+        (hamburgerLines[2] as HTMLElement).style.transform = '';
+        (hamburgerLines[2] as HTMLElement).style.width = '1rem';
+      }
+    }
+  }
+
+  mobileBtn?.addEventListener('click', toggleMenu);
+
+  // Close menu on link click
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (menuOpen) toggleMenu();
+    });
+  });
+</script>
