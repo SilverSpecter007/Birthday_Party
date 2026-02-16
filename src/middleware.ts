@@ -2,11 +2,13 @@ import { defineMiddleware } from 'astro:middleware';
 import { createHmac } from 'crypto';
 
 const COOKIE_NAME = 'admin_session';
-const SECRET = process.env.ADMIN_PASSWORD || 'default-change-me';
+function getSecret(): string {
+  return import.meta.env.ADMIN_PASSWORD || 'default-change-me';
+}
 
 export function signSession(timestamp: number): string {
   const data = `admin:${timestamp}`;
-  const signature = createHmac('sha256', SECRET).update(data).digest('hex').substring(0, 16);
+  const signature = createHmac('sha256', getSecret()).update(data).digest('hex').substring(0, 16);
   return `${data}:${signature}`;
 }
 
@@ -24,7 +26,7 @@ export function verifySession(cookie: string): boolean {
   const maxAge = 24 * 60 * 60 * 1000;
   if (Date.now() - ts > maxAge) return false;
 
-  const expected = createHmac('sha256', SECRET).update(`${prefix}:${timestamp}`).digest('hex').substring(0, 16);
+  const expected = createHmac('sha256', getSecret()).update(`${prefix}:${timestamp}`).digest('hex').substring(0, 16);
   return signature === expected;
 }
 
