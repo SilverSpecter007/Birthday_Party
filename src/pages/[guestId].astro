@@ -4,6 +4,7 @@ import InvitationCard from '../components/InvitationCard.astro';
 import RsvpForm from '../components/RsvpForm.astro';
 import { getGuest } from '../lib/db';
 import { EVENT } from '../lib/config';
+export const prerender = false;
 
 const { guestId } = Astro.params;
 
