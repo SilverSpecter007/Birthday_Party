@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { createGuest, generateGuestId } from '../../../lib/db';
-import { EVENT } from '../../../lib/config';
+import { createGuest, generateGuestId } from '../../../../lib/db';
+import { EVENT } from '../../../../lib/config';
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json();
