@@ -1,10 +1,56 @@
-<html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Birthday Party</title>
-  </head>
-  <body>
-    <h1>Herzlich Willkommen</h1>
-  </body>
-</html>
+---
+import InvitationLayout from '../layouts/InvitationLayout.astro';
+import { EVENT } from '../lib/config';
+---
+<InvitationLayout title={`${EVENT.title} – ${EVENT.hosts}`}>
+  <div class="text-center space-y-8 pt-16 sm:pt-20 pb-8">
+    <!-- Main heading -->
+    <h1 class="glitter-text font-[var(--font-display)] text-5xl sm:text-6xl font-black leading-tight tracking-tight">
+      Save the Date
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-lg sm:text-xl text-[var(--color-cream-light)] leading-relaxed">
+      {EVENT.subtitle}
+    </p>
+
+    <!-- Event details -->
+    <div class="space-y-2 text-[var(--color-cream-light)]">
+      <p class="text-2xl sm:text-3xl font-[var(--font-display)] text-[var(--color-gold)]">
+        Am {EVENT.date_short}
+      </p>
+      <p class="text-lg">
+        in der <span class="font-semibold text-[var(--color-gold-light)]">{EVENT.location}</span>
+      </p>
+      {EVENT.time && <p class="text-lg">{EVENT.time}</p>}
+      {EVENT.address && <p class="text-sm opacity-70">{EVENT.address}</p>}
+    </div>
+
+    <!-- Hosts signature -->
+    <p class="font-[var(--font-script)] text-4xl sm:text-5xl text-[var(--color-gold)] pt-2">
+      {EVENT.hosts}
+    </p>
+
+    <!-- Divider -->
+    <div class="flex items-center justify-center gap-4 py-4">
+      <div class="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-gold)]"></div>
+      <div class="w-2 h-2 rounded-full bg-[var(--color-gold)] opacity-60"></div>
+      <div class="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-gold)]"></div>
+    </div>
+
+    <!-- Admin link -->
+    <a
+      href="/admin"
+      class="inline-flex items-center gap-2.5 px-6 py-3 border border-[var(--color-form-border)] rounded-lg
+             text-[var(--color-gold)] text-sm font-medium uppercase tracking-widest
+             bg-[var(--color-form-bg)] transition-all duration-300
+             hover:bg-[rgba(201,168,76,0.15)] hover:border-[var(--color-gold)] hover:shadow-[0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-80">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </svg>
+      Admin Panel
+    </a>
+  </div>
+</InvitationLayout>
