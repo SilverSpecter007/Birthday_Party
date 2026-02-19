@@ -1,19 +1,12 @@
-import Database from 'better-sqlite3';
-import { mkdirSync } from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { createClient } from '@libsql/client';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const dbPath = join(__dirname, '../../data/guests.db');
+const db = createClient({
+  url: import.meta.env.TURSO_DATABASE_URL || 'file:data/guests.db',
+  authToken: import.meta.env.TURSO_AUTH_TOKEN || undefined,
+});
 
-mkdirSync(dirname(dbPath), { recursive: true });
-
-const db = new Database(dbPath);
-
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
-
-db.exec(`
+// Initialize table
+await db.execute(`
   CREATE TABLE IF NOT EXISTS guests (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
@@ -41,23 +34,46 @@ export interface Guest {
   created_at: string;
 }
 
-export function getAllGuests(): Guest[] {
-  return db.prepare('SELECT * FROM guests ORDER BY created_at DESC').all() as Guest[];
+function rowToGuest(row: Record<string, unknown>): Guest {
+  return {
+    id: row.id as string,
+    name: row.name as string,
+    email: (row.email as string) || null,
+    plus_one: Number(row.plus_one) || 0,
+    plus_one_name: (row.plus_one_name as string) || null,
+    status: (row.status as Guest['status']) || 'pending',
+    dietary: (row.dietary as string) || null,
+    message: (row.message as string) || null,
+    responded_at: (row.responded_at as string) || null,
+    created_at: row.created_at as string,
+  };
 }
 
-export function getGuest(id: string): Guest | undefined {
-  return db.prepare('SELECT * FROM guests WHERE id = ?').get(id) as Guest | undefined;
+export async function getAllGuests(): Promise<Guest[]> {
+  const result = await db.execute('SELECT * FROM guests ORDER BY created_at DESC');
+  return result.rows.map((row) => rowToGuest(row as unknown as Record<string, unknown>));
 }
 
-export function createGuest(data: { id: string; name: string; email?: string; plus_one?: number }): Guest {
-  const stmt = db.prepare('INSERT INTO guests (id, name, email, plus_one) VALUES (?, ?, ?, ?)');
-  stmt.run(data.id, data.name, data.email || null, data.plus_one || 0);
-  return getGuest(data.id)!;
+export async function getGuest(id: string): Promise<Guest | undefined> {
+  const result = await db.execute({ sql: 'SELECT * FROM guests WHERE id = ?', args: [id] });
+  if (result.rows.length === 0) return undefined;
+  return rowToGuest(result.rows[0] as unknown as Record<string, unknown>);
 }
 
-export function updateGuest(id: string, data: Partial<Pick<Guest, 'name' | 'email' | 'plus_one' | 'status' | 'plus_one_name' | 'dietary' | 'message'>>): Guest | undefined {
+export async function createGuest(data: { id: string; name: string; email?: string; plus_one?: number }): Promise<Guest> {
+  await db.execute({
+    sql: 'INSERT INTO guests (id, name, email, plus_one) VALUES (?, ?, ?, ?)',
+    args: [data.id, data.name, data.email || null, data.plus_one || 0],
+  });
+  return (await getGuest(data.id))!;
+}
+
+export async function updateGuest(
+  id: string,
+  data: Partial<Pick<Guest, 'name' | 'email' | 'plus_one' | 'status' | 'plus_one_name' | 'dietary' | 'message'>>
+): Promise<Guest | undefined> {
   const fields: string[] = [];
-  const values: unknown[] = [];
+  const values: (string | number | null)[] = [];
 
   if (data.name !== undefined) { fields.push('name = ?'); values.push(data.name); }
   if (data.email !== undefined) { fields.push('email = ?'); values.push(data.email); }
@@ -70,33 +86,42 @@ export function updateGuest(id: string, data: Partial<Pick<Guest, 'name' | 'emai
   if (fields.length === 0) return getGuest(id);
 
   values.push(id);
-  db.prepare(`UPDATE guests SET ${fields.join(', ')} WHERE id = ?`).run(...values);
+  await db.execute({ sql: `UPDATE guests SET ${fields.join(', ')} WHERE id = ?`, args: values });
   return getGuest(id);
 }
 
-export function updateRsvp(id: string, data: { status: string; plusOneName?: string; dietary?: string; message?: string }): Guest | undefined {
-  const stmt = db.prepare(`
-    UPDATE guests
-    SET status = ?, plus_one_name = ?, dietary = ?, message = ?, responded_at = datetime('now')
-    WHERE id = ?
-  `);
-  stmt.run(data.status, data.plusOneName || null, data.dietary || null, data.message || null, id);
+export async function updateRsvp(
+  id: string,
+  data: { status: string; plusOneName?: string; dietary?: string; message?: string }
+): Promise<Guest | undefined> {
+  await db.execute({
+    sql: `UPDATE guests SET status = ?, plus_one_name = ?, dietary = ?, message = ?, responded_at = datetime('now') WHERE id = ?`,
+    args: [data.status, data.plusOneName || null, data.dietary || null, data.message || null, id],
+  });
   return getGuest(id);
 }
 
-export function deleteGuest(id: string): boolean {
-  const result = db.prepare('DELETE FROM guests WHERE id = ?').run(id);
-  return result.changes > 0;
+export async function deleteGuest(id: string): Promise<boolean> {
+  const result = await db.execute({ sql: 'DELETE FROM guests WHERE id = ?', args: [id] });
+  return result.rowsAffected > 0;
 }
 
-export function getStats() {
-  const total = (db.prepare('SELECT COUNT(*) as count FROM guests').get() as { count: number }).count;
-  const accepted = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted'").get() as { count: number }).count;
-  const declined = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'declined'").get() as { count: number }).count;
-  const pending = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'pending'").get() as { count: number }).count;
-  const plusOnes = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted' AND plus_one = 1 AND plus_one_name IS NOT NULL AND plus_one_name != ''").get() as { count: number }).count;
+export async function getStats() {
+  const [totalR, acceptedR, declinedR, pendingR, plusOnesR] = await Promise.all([
+    db.execute('SELECT COUNT(*) as count FROM guests'),
+    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted'"),
+    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'declined'"),
+    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'pending'"),
+    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted' AND plus_one = 1 AND plus_one_name IS NOT NULL AND plus_one_name != ''"),
+  ]);
 
-  return { total, accepted, declined, pending, plusOnes };
+  return {
+    total: Number(totalR.rows[0].count),
+    accepted: Number(acceptedR.rows[0].count),
+    declined: Number(declinedR.rows[0].count),
+    pending: Number(pendingR.rows[0].count),
+    plusOnes: Number(plusOnesR.rows[0].count),
+  };
 }
 
 export function generateGuestId(): string {
