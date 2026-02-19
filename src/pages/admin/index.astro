@@ -3,6 +3,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 import StatsCards from '../../components/StatsCards.astro';
 import GuestTable from '../../components/GuestTable.astro';
 import { getAllGuests, getStats } from '../../lib/db';
+export const prerender = false;
 
 const stats = getStats();
 const guests = getAllGuests();
