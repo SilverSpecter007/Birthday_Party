@@ -3,6 +3,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
 import GuestForm from '../../../../components/GuestForm.astro';
 import { getGuest } from '../../../../lib/db';
 import { EVENT } from '../../../../lib/config';
+export const prerender = false;
 
 const { id } = Astro.params;
 const guest = id ? getGuest(id) : undefined;
