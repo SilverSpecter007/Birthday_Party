@@ -1,22 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getGuest, updateGuest, deleteGuest } from '../../../../lib/db';
-import { verifySession } from '../../../../middleware';
 
-function checkAuth(cookies: any): Response | null {
-  const session = cookies.get('admin_session')?.value;
-  if (!session || !verifySession(session)) {
-    return new Response(JSON.stringify({ error: 'Nicht autorisiert.' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-  return null;
-}
-
-export const PUT: APIRoute = async ({ params, request, cookies }) => {
-  const authError = checkAuth(cookies);
-  if (authError) return authError;
-
+export const PUT: APIRoute = async ({ params, request }) => {
   const { id } = params;
   if (!id) {
     return new Response(JSON.stringify({ error: 'ID fehlt.' }), {
@@ -25,8 +10,8 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
     });
   }
 
-  const guest = getGuest(id);
-  if (!guest) {
+  const existing = await getGuest(id);
+  if (!existing) {
     return new Response(JSON.stringify({ error: 'Gast nicht gefunden.' }), {
       status: 404,
       headers: { 'Content-Type': 'application/json' },
@@ -34,10 +19,10 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
   }
 
   const body = await request.json();
-  const updated = updateGuest(id, {
+  const updated = await updateGuest(id, {
     name: body.name,
     email: body.email,
-    plus_one: body.plus_one ? 1 : 0,
+    plus_one: body.plus_one,
     status: body.status,
   });
 
@@ -47,10 +32,7 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
   });
 };
 
-export const DELETE: APIRoute = async ({ params, cookies }) => {
-  const authError = checkAuth(cookies);
-  if (authError) return authError;
-
+export const DELETE: APIRoute = async ({ params }) => {
   const { id } = params;
   if (!id) {
     return new Response(JSON.stringify({ error: 'ID fehlt.' }), {
@@ -59,7 +41,7 @@ export const DELETE: APIRoute = async ({ params, cookies }) => {
     });
   }
 
-  const deleted = deleteGuest(id);
+  const deleted = await deleteGuest(id);
   if (!deleted) {
     return new Response(JSON.stringify({ error: 'Gast nicht gefunden.' }), {
       status: 404,
