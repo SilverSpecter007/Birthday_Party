@@ -5,8 +5,8 @@ import GuestTable from '../../components/GuestTable.astro';
 import { getAllGuests, getStats } from '../../lib/db';
 export const prerender = false;
 
-const stats = getStats();
-const guests = getAllGuests();
+const stats = await getStats();
+const guests = await getAllGuests();
 ---
 <AdminLayout title="Dashboard">
   <div class="mb-6 flex items-center justify-between">
