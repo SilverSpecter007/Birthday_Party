@@ -25,7 +25,7 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
     });
   }
 
-  const guest = getGuest(id);
+  const guest = await getGuest(id);
   if (!guest) {
     return new Response(JSON.stringify({ error: 'Gast nicht gefunden.' }), {
       status: 404,
@@ -34,7 +34,7 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
   }
 
   const body = await request.json();
-  const updated = updateGuest(id, {
+  const updated = await updateGuest(id, {
     name: body.name,
     email: body.email,
     plus_one: body.plus_one ? 1 : 0,
@@ -59,7 +59,7 @@ export const DELETE: APIRoute = async ({ params, cookies }) => {
     });
   }
 
-  const deleted = deleteGuest(id);
+  const deleted = await deleteGuest(id);
   if (!deleted) {
     return new Response(JSON.stringify({ error: 'Gast nicht gefunden.' }), {
       status: 404,

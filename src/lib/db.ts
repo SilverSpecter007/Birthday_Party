@@ -1,32 +1,40 @@
-import Database from 'better-sqlite3';
-import { mkdirSync } from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { createClient, type Client, type InValue } from '@libsql/client';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const dbPath = join(__dirname, '../../data/guests.db');
+let db: Client;
 
-mkdirSync(dirname(dbPath), { recursive: true });
+function getDb(): Client {
+  if (!db) {
+    db = createClient({
+      url: import.meta.env.TURSO_DATABASE_URL || 'file:data/guests.db',
+      authToken: import.meta.env.TURSO_AUTH_TOKEN || undefined,
+    });
+  }
+  return db;
+}
 
-const db = new Database(dbPath);
+let initialized = false;
 
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS guests (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT,
-    plus_one INTEGER DEFAULT 0,
-    plus_one_name TEXT,
-    status TEXT DEFAULT 'pending',
-    dietary TEXT,
-    message TEXT,
-    responded_at TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
-  )
-`);
+async function initDb(): Promise<Client> {
+  const client = getDb();
+  if (!initialized) {
+    await client.execute(`
+      CREATE TABLE IF NOT EXISTS guests (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT,
+        plus_one INTEGER DEFAULT 0,
+        plus_one_name TEXT,
+        status TEXT DEFAULT 'pending',
+        dietary TEXT,
+        message TEXT,
+        responded_at TEXT,
+        created_at TEXT DEFAULT (datetime('now'))
+      )
+    `);
+    initialized = true;
+  }
+  return client;
+}
 
 export interface Guest {
   id: string;
@@ -41,23 +49,30 @@ export interface Guest {
   created_at: string;
 }
 
-export function getAllGuests(): Guest[] {
-  return db.prepare('SELECT * FROM guests ORDER BY created_at DESC').all() as Guest[];
+export async function getAllGuests(): Promise<Guest[]> {
+  const client = await initDb();
+  const result = await client.execute('SELECT * FROM guests ORDER BY created_at DESC');
+  return result.rows as unknown as Guest[];
 }
 
-export function getGuest(id: string): Guest | undefined {
-  return db.prepare('SELECT * FROM guests WHERE id = ?').get(id) as Guest | undefined;
+export async function getGuest(id: string): Promise<Guest | undefined> {
+  const client = await initDb();
+  const result = await client.execute({ sql: 'SELECT * FROM guests WHERE id = ?', args: [id] });
+  return result.rows[0] as unknown as Guest | undefined;
 }
 
-export function createGuest(data: { id: string; name: string; email?: string; plus_one?: number }): Guest {
-  const stmt = db.prepare('INSERT INTO guests (id, name, email, plus_one) VALUES (?, ?, ?, ?)');
-  stmt.run(data.id, data.name, data.email || null, data.plus_one || 0);
-  return getGuest(data.id)!;
+export async function createGuest(data: { id: string; name: string; email?: string; plus_one?: number }): Promise<Guest> {
+  const client = await initDb();
+  await client.execute({
+    sql: 'INSERT INTO guests (id, name, email, plus_one) VALUES (?, ?, ?, ?)',
+    args: [data.id, data.name, data.email || null, data.plus_one || 0],
+  });
+  return (await getGuest(data.id))!;
 }
 
-export function updateGuest(id: string, data: Partial<Pick<Guest, 'name' | 'email' | 'plus_one' | 'status' | 'plus_one_name' | 'dietary' | 'message'>>): Guest | undefined {
+export async function updateGuest(id: string, data: Partial<Pick<Guest, 'name' | 'email' | 'plus_one' | 'status' | 'plus_one_name' | 'dietary' | 'message'>>): Promise<Guest | undefined> {
   const fields: string[] = [];
-  const values: unknown[] = [];
+  const values: InValue[] = [];
 
   if (data.name !== undefined) { fields.push('name = ?'); values.push(data.name); }
   if (data.email !== undefined) { fields.push('email = ?'); values.push(data.email); }
@@ -69,34 +84,47 @@ export function updateGuest(id: string, data: Partial<Pick<Guest, 'name' | 'emai
 
   if (fields.length === 0) return getGuest(id);
 
+  const client = await initDb();
   values.push(id);
-  db.prepare(`UPDATE guests SET ${fields.join(', ')} WHERE id = ?`).run(...values);
+  await client.execute({
+    sql: `UPDATE guests SET ${fields.join(', ')} WHERE id = ?`,
+    args: values,
+  });
   return getGuest(id);
 }
 
-export function updateRsvp(id: string, data: { status: string; plusOneName?: string; dietary?: string; message?: string }): Guest | undefined {
-  const stmt = db.prepare(`
-    UPDATE guests
-    SET status = ?, plus_one_name = ?, dietary = ?, message = ?, responded_at = datetime('now')
-    WHERE id = ?
-  `);
-  stmt.run(data.status, data.plusOneName || null, data.dietary || null, data.message || null, id);
+export async function updateRsvp(id: string, data: { status: string; plusOneName?: string; dietary?: string; message?: string }): Promise<Guest | undefined> {
+  const client = await initDb();
+  await client.execute({
+    sql: `UPDATE guests SET status = ?, plus_one_name = ?, dietary = ?, message = ?, responded_at = datetime('now') WHERE id = ?`,
+    args: [data.status, data.plusOneName || null, data.dietary || null, data.message || null, id],
+  });
   return getGuest(id);
 }
 
-export function deleteGuest(id: string): boolean {
-  const result = db.prepare('DELETE FROM guests WHERE id = ?').run(id);
-  return result.changes > 0;
+export async function deleteGuest(id: string): Promise<boolean> {
+  const client = await initDb();
+  const result = await client.execute({ sql: 'DELETE FROM guests WHERE id = ?', args: [id] });
+  return result.rowsAffected > 0;
 }
 
-export function getStats() {
-  const total = (db.prepare('SELECT COUNT(*) as count FROM guests').get() as { count: number }).count;
-  const accepted = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted'").get() as { count: number }).count;
-  const declined = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'declined'").get() as { count: number }).count;
-  const pending = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'pending'").get() as { count: number }).count;
-  const plusOnes = (db.prepare("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted' AND plus_one = 1 AND plus_one_name IS NOT NULL AND plus_one_name != ''").get() as { count: number }).count;
+export async function getStats() {
+  const client = await initDb();
+  const [total, accepted, declined, pending, plusOnes] = await Promise.all([
+    client.execute('SELECT COUNT(*) as count FROM guests'),
+    client.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted'"),
+    client.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'declined'"),
+    client.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'pending'"),
+    client.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted' AND plus_one = 1 AND plus_one_name IS NOT NULL AND plus_one_name != ''"),
+  ]);
 
-  return { total, accepted, declined, pending, plusOnes };
+  return {
+    total: Number(total.rows[0]!.count),
+    accepted: Number(accepted.rows[0]!.count),
+    declined: Number(declined.rows[0]!.count),
+    pending: Number(pending.rows[0]!.count),
+    plusOnes: Number(plusOnes.rows[0]!.count),
+  };
 }
 
 export function generateGuestId(): string {

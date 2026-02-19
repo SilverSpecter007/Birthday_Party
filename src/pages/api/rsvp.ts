@@ -12,7 +12,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const guest = getGuest(guestId);
+  const guest = await getGuest(guestId);
   if (!guest) {
     return new Response(JSON.stringify({ error: 'Gast nicht gefunden.' }), {
       status: 404,
@@ -20,7 +20,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const updated = updateRsvp(guestId, {
+  const updated = await updateRsvp(guestId, {
     status,
     plusOneName: status === 'accepted' ? plusOneName : undefined,
     dietary: status === 'accepted' ? dietary : undefined,

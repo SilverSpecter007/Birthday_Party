@@ -8,17 +8,17 @@ Personalisierte digitale Einladungen für den 40. Geburtstag von Janina und Juli
 - RSVP-Formular mit Zu-/Absage, Begleitung und Nachricht
 - Admin-Dashboard zur Gästeverwaltung
 - Statistiken (Zusagen, Absagen, Ausstehend)
-- SQLite-Datenbank - keine externe DB nötig
 
 ## Tech Stack
 
-- **Astro** (SSR mit Node-Adapter)
+- **Astro** (SSR mit Vercel-Adapter)
 - **Tailwind CSS v4**
-- **SQLite** via better-sqlite3
+- **Turso** (gehostete SQLite-Datenbank) / lokale SQLite für Entwicklung
 
 ## Voraussetzungen
 
 - Node.js 18+
+- [Turso](https://turso.tech)-Datenbank (kostenlos, für Vercel-Deployment)
 
 ## Installation
 
@@ -32,7 +32,13 @@ npm install
 
 ```
 ADMIN_PASSWORD=dein-sicheres-passwort
+
+# Für Vercel-Deployment (Turso):
+TURSO_DATABASE_URL=libsql://deine-db.turso.io
+TURSO_AUTH_TOKEN=dein-token
 ```
+
+Ohne Turso-Variablen wird automatisch eine lokale SQLite-Datei (`data/guests.db`) verwendet.
 
 Event-Details können in `src/lib/config.ts` angepasst werden (Datum, Uhrzeit, Location, Adresse etc.).
 
@@ -44,12 +50,19 @@ npm run dev
 
 Die Seite ist dann unter `http://localhost:4321` erreichbar.
 
-## Build & Start
+## Vercel-Deployment
 
-```bash
-npm run build
-node dist/server/entry.mjs
-```
+1. Turso-Datenbank erstellen:
+   ```bash
+   turso db create birthday-party
+   turso db tokens create birthday-party
+   ```
+2. Repository mit Vercel verbinden
+3. Environment Variables in Vercel setzen:
+   - `ADMIN_PASSWORD`
+   - `TURSO_DATABASE_URL`
+   - `TURSO_AUTH_TOKEN`
+4. Deployen
 
 ## Gästeverwaltung
 

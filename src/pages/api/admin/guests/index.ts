@@ -24,7 +24,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   }
 
   const id = generateGuestId();
-  const guest = createGuest({
+  const guest = await createGuest({
     id,
     name: name.trim(),
     email: email?.trim() || undefined,

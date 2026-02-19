@@ -12,7 +12,7 @@ if (!guestId || guestId === 'admin' || guestId === 'api') {
   return Astro.redirect('/404');
 }
 
-const guest = getGuest(guestId);
+const guest = await getGuest(guestId);
 
 if (!guest) {
   return Astro.redirect('/404');

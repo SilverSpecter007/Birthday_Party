@@ -5,7 +5,7 @@ import { getGuest } from '../../../../lib/db';
 import { EVENT } from '../../../../lib/config';
 
 const { id } = Astro.params;
-const guest = id ? getGuest(id) : undefined;
+const guest = id ? await getGuest(id) : undefined;
 
 if (!guest) {
   return Astro.redirect('/admin');
