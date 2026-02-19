@@ -1,15 +1,11 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel/serverless';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://SilverSpecter007.github.io',
-  base: '/Birthday_Party',
-  output: 'static',
-  adapter: node({
-    mode: 'standalone',
-  }),
+  site: 'https://deine-seite.vercel.app',
+  output: 'server',
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
   },
