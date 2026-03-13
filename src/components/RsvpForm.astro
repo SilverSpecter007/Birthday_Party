@@ -24,12 +24,6 @@ const hasResponded = guest.status !== 'pending';
           <p class="text-sm text-[var(--color-cream)] opacity-70">Schade, vielleicht beim nächsten Mal!</p>
         </div>
       )}
-      <button
-        id="change-response-btn"
-        class="text-sm text-[var(--color-gold)] hover:text-[var(--color-gold-pale)] underline transition-colors cursor-pointer"
-      >
-        Antwort ändern
-      </button>
     </div>
   )}
 
@@ -137,8 +131,6 @@ const hasResponded = guest.status !== 'pending';
   const formContainer = document.getElementById('rsvp-form-container');
   const responseDisplay = document.getElementById('response-display');
   const successMessage = document.getElementById('success-message');
-  const changeBtn = document.getElementById('change-response-btn');
-
   function selectStatus(status) {
     selectedStatus = status;
 
@@ -166,13 +158,6 @@ const hasResponded = guest.status !== 'pending';
 
   btnAccept.addEventListener('click', () => selectStatus('accepted'));
   btnDecline.addEventListener('click', () => selectStatus('declined'));
-
-  if (changeBtn) {
-    changeBtn.addEventListener('click', () => {
-      responseDisplay.classList.add('hidden');
-      formContainer.classList.remove('hidden');
-    });
-  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
