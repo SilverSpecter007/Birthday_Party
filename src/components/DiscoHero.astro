@@ -1,0 +1,195 @@
+---
+---
+<div class="disco-hero-wrapper" aria-hidden="true">
+
+  <!-- Hanging wire -->
+  <div class="hero-string"></div>
+
+  <!-- Swaying ball -->
+  <div class="hero-sway">
+    <div class="hero-ball-inner">
+      <svg viewBox="0 0 110 110" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="h-mirror-tiles" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+            <rect width="5" height="5" fill="#12101e" />
+            <rect x="0.5" y="0.5" width="4" height="4" fill="#b2aac0" rx="0.15" />
+            <animateTransform attributeName="patternTransform" type="translate"
+              from="0 0" to="5 0" dur="0.65s" repeatCount="indefinite" calcMode="linear" />
+          </pattern>
+          <clipPath id="h-ball-clip">
+            <circle cx="55" cy="55" r="49" />
+          </clipPath>
+          <radialGradient id="h-sphere-shade" cx="36%" cy="30%" r="68%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="rgba(255,248,244,0.0)" />
+            <stop offset="42%"  stop-color="rgba(80,60,90,0.50)" />
+            <stop offset="100%" stop-color="rgba(8,6,18,0.92)" />
+          </radialGradient>
+          <radialGradient id="h-spec1" cx="33%" cy="27%" r="32%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="rgba(255,255,255,0.98)" />
+            <stop offset="45%"  stop-color="rgba(255,248,240,0.30)" />
+            <stop offset="100%" stop-color="transparent" />
+          </radialGradient>
+          <radialGradient id="h-spec2" cx="67%" cy="70%" r="35%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="rgba(204,158,130,0.22)" />
+            <stop offset="100%" stop-color="transparent" />
+          </radialGradient>
+          <filter id="h-ball-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feColorMatrix in="blur" type="matrix"
+              values="1 0.3 0.2 0 0  0.5 0.2 0.5 0 0  0.3 0.1 0.8 0 0  0 0 0 0.6 0"
+              result="tinted" />
+            <feMerge>
+              <feMergeNode in="tinted" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <circle cx="55" cy="55" r="52" fill="none"
+          stroke="rgba(120,102,170,0.18)" stroke-width="4" filter="url(#h-ball-glow)" />
+        <circle cx="55" cy="55" r="49" fill="#16142a" />
+        <rect x="6" y="6" width="98" height="98"
+          fill="url(#h-mirror-tiles)" clip-path="url(#h-ball-clip)" />
+        <circle cx="55" cy="55" r="49" fill="url(#h-sphere-shade)" />
+        <g clip-path="url(#h-ball-clip)">
+          <rect x="25.5" y="25.5" width="4" height="4" fill="rgba(255,252,248,0.95)" rx="0.15" />
+          <rect x="50.5" y="15.5" width="4" height="4" fill="rgba(255,250,245,0.90)" rx="0.15" />
+          <rect x="35.5" y="45.5" width="4" height="4" fill="rgba(255,248,242,0.85)" rx="0.15" />
+          <rect x="70.5" y="35.5" width="4" height="4" fill="rgba(245,230,218,0.80)" rx="0.15" />
+          <rect x="15.5" y="50.5" width="4" height="4" fill="rgba(255,248,242,0.82)" rx="0.15" />
+          <rect x="80.5" y="50.5" width="4" height="4" fill="rgba(238,222,210,0.75)" rx="0.15" />
+          <rect x="40.5" y="60.5" width="4" height="4" fill="rgba(255,245,238,0.78)" rx="0.15" />
+          <rect x="60.5" y="70.5" width="4" height="4" fill="rgba(255,245,235,0.72)" rx="0.15" />
+          <rect x="60.5" y="25.5" width="4" height="4" fill="rgba(204,158,130,0.70)" rx="0.15" />
+          <rect x="80.5" y="70.5" width="4" height="4" fill="rgba(204,158,130,0.60)" rx="0.15" />
+          <rect x="85.5" y="45.5" width="4" height="4" fill="rgba(180,160,220,0.58)" rx="0.15" />
+          <rect x="50.5" y="80.5" width="4" height="4" fill="rgba(160,140,210,0.48)" rx="0.15" />
+        </g>
+        <circle cx="55" cy="55" r="49" fill="url(#h-spec1)" />
+        <circle cx="55" cy="55" r="49" fill="url(#h-spec2)" />
+        <ellipse cx="55" cy="9" rx="5" ry="3"
+          fill="#1e1c32" stroke="rgba(180,160,140,0.35)" stroke-width="0.5" />
+      </svg>
+    </div>
+
+    <!-- Light reflections -->
+    <div class="h-refl r1"></div>
+    <div class="h-refl r2"></div>
+    <div class="h-refl r3"></div>
+    <div class="h-refl r4"></div>
+    <div class="h-refl r5"></div>
+  </div>
+
+  <!-- Rotating light beams, origin = ball center -->
+  <div class="beams-anchor">
+    <svg class="beams-svg" viewBox="-380 0 760 520"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g class="beams-group">
+        <!-- warm white — center -->
+        <polygon points="0,0 -22,520 22,520"      fill="rgba(255,248,240,0.13)"/>
+        <!-- violet — right -->
+        <polygon points="0,0 78,520 112,520"       fill="rgba(184,168,224,0.14)"/>
+        <!-- rosé gold — left -->
+        <polygon points="0,0 -112,520 -78,520"     fill="rgba(204,158,130,0.13)"/>
+        <!-- white — far right -->
+        <polygon points="0,0 160,520 188,520"      fill="rgba(255,255,255,0.09)"/>
+        <!-- lavender — far left -->
+        <polygon points="0,0 -188,520 -160,520"    fill="rgba(200,180,240,0.10)"/>
+        <!-- amber — very far right -->
+        <polygon points="0,0 240,520 268,520"      fill="rgba(221,184,158,0.11)"/>
+        <!-- pale white — very far left -->
+        <polygon points="0,0 -268,520 -240,520"    fill="rgba(255,252,248,0.08)"/>
+        <!-- violet pale — edge right -->
+        <polygon points="0,0 320,520 345,520"      fill="rgba(180,160,220,0.07)"/>
+        <!-- rosé pale — edge left -->
+        <polygon points="0,0 -345,520 -320,520"    fill="rgba(204,158,130,0.07)"/>
+      </g>
+    </svg>
+  </div>
+
+</div>
+
+<style>
+  .disco-hero-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .hero-string {
+    width: 1.5px;
+    height: 36px;
+    background: linear-gradient(
+      to bottom,
+      rgba(180, 160, 150, 0.15),
+      rgba(180, 160, 140, 0.55)
+    );
+  }
+
+  .hero-sway {
+    position: relative;
+    transform-origin: top center;
+    animation: disco-sway 5s ease-in-out infinite;
+  }
+
+  .hero-ball-inner {
+    display: flex;
+    justify-content: center;
+    filter:
+      drop-shadow(0 0 18px rgba(204, 158, 130, 0.35))
+      drop-shadow(0 0 42px rgba(120, 102, 170, 0.25));
+  }
+
+  /* Light reflections */
+  .h-refl {
+    position: absolute;
+    border-radius: 50%;
+    animation: twinkle var(--dur, 2s) ease-in-out infinite;
+    animation-delay: var(--del, 0s);
+    pointer-events: none;
+  }
+  .r1 { width: 5px; height: 5px; background: rgba(255,245,235,0.95); box-shadow: 0 0 5px 2px rgba(255,220,190,0.70); top: 10px; left: -28px; --dur: 1.7s; --del: 0s; }
+  .r2 { width: 4px; height: 4px; background: rgba(255,250,248,0.90); box-shadow: 0 0 4px 2px rgba(240,210,190,0.60); top: 42px; right: -30px; --dur: 2.4s; --del: 0.55s; }
+  .r3 { width: 4px; height: 4px; background: rgba(190,170,230,0.90); box-shadow: 0 0 5px 2px rgba(160,140,210,0.55); top: 8px; right: -22px; --dur: 3.3s; --del: 0.85s; }
+  .r4 { width: 5px; height: 5px; background: rgba(210,165,135,0.95); box-shadow: 0 0 6px 2px rgba(204,158,130,0.55); bottom: 18px; right: -24px; --dur: 2.9s; --del: 0.3s; }
+  .r5 { width: 3px; height: 3px; background: rgba(255,255,255,0.95); box-shadow: 0 0 3px 2px rgba(230,200,220,0.65); top: 58px; left: -24px; --dur: 1.5s; --del: 1.1s; }
+
+  /* Beams anchor: positioned so SVG origin is at ball center */
+  .beams-anchor {
+    position: absolute;
+    /* string(36) + half ball(48) = 84px from top of wrapper */
+    top: 84px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    z-index: -1; /* behind the ball */
+  }
+
+  .beams-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-50%);
+    width: 760px;
+    max-width: 100vw;
+    height: 520px;
+    pointer-events: none;
+  }
+
+  .beams-group {
+    transform-origin: 0px 0px;
+    animation: beam-spin 14s linear infinite;
+  }
+
+  @keyframes beam-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-sway    { animation: none; }
+    .h-refl       { animation: none; opacity: 0.5; }
+    .beams-group  { animation: none; }
+  }
+</style>

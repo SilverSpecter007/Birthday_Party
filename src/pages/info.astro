@@ -1,44 +1,63 @@
 ---
-import InvitationLayout from '../layouts/InvitationLayout.astro';
-import DancingFigures from '../components/DancingFigures.astro';
+import '../styles/global.css';
+import Sparkles from '../components/Sparkles.astro';
+import DiscoHero from '../components/DiscoHero.astro';
 import { getInfoContent } from '../lib/db';
 
 const content = await getInfoContent();
 ---
-<InvitationLayout title="Party Info — Janina & Julian">
-  <div class="text-center space-y-6 pt-16 sm:pt-20 pb-24">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Party Info — Janina & Julian</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+</head>
+<body class="min-h-dvh bg-[var(--color-bg-dark)] overflow-x-hidden">
+  <div class="vignette"></div>
+  <Sparkles />
 
-    <!-- Heading -->
-    <h1 class="glitter-text font-[var(--font-display)] text-4xl sm:text-5xl font-black leading-tight">
-      Party Info
-    </h1>
+  <main class="relative z-10 flex flex-col items-center px-4 pt-8 pb-16">
+    <div class="w-full max-w-lg">
 
-    <p class="font-[var(--font-script)] text-3xl text-[var(--color-gold)]">
-      Janina & Julian
-    </p>
+      <!-- Disco ball hero with rotating beams -->
+      <DiscoHero />
 
-    <!-- Divider -->
-    <div class="flex items-center justify-center gap-4 py-1">
-      <div class="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-gold)]"></div>
-      <div class="w-2 h-2 rounded-full bg-[var(--color-gold)] opacity-60"></div>
-      <div class="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-gold)]"></div>
-    </div>
+      <!-- Page content -->
+      <div class="text-center space-y-6 mt-10">
+        <h1 class="glitter-text font-[var(--font-display)] text-4xl sm:text-5xl font-black leading-tight">
+          Party Info
+        </h1>
 
-    <!-- Info content -->
-    {content ? (
-      <div class="info-content text-[var(--color-cream-light)] text-base leading-relaxed text-left max-w-md mx-auto">
-        {content}
+        <p class="font-[var(--font-script)] text-3xl text-[var(--color-gold)]">
+          Janina & Julian
+        </p>
+
+        <div class="flex items-center justify-center gap-4 py-1">
+          <div class="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-gold)]"></div>
+          <div class="w-2 h-2 rounded-full bg-[var(--color-gold)] opacity-60"></div>
+          <div class="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-gold)]"></div>
+        </div>
+
+        {content ? (
+          <div class="info-content text-[var(--color-cream-light)] text-base leading-relaxed text-left">
+            {content}
+          </div>
+        ) : (
+          <p class="text-[var(--color-cream)] opacity-40 text-sm italic py-4">
+            Weitere Informationen folgen in Kürze.
+          </p>
+        )}
       </div>
-    ) : (
-      <p class="text-[var(--color-cream)] opacity-40 text-sm italic">
-        Weitere Informationen folgen in Kürze.
-      </p>
-    )}
 
-  </div>
-
-  <DancingFigures />
-</InvitationLayout>
+    </div>
+  </main>
+</body>
+</html>
 
 <style>
   .info-content {
