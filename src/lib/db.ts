@@ -17,9 +17,17 @@ await db.execute(`
     dietary TEXT,
     message TEXT,
     responded_at TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
+    created_at TEXT DEFAULT (datetime('now')),
+    invited_by TEXT DEFAULT 'julian'
   )
 `);
+
+// Migration: add invited_by to existing tables
+try {
+  await db.execute(`ALTER TABLE guests ADD COLUMN invited_by TEXT DEFAULT 'julian'`);
+} catch {
+  // Column already exists — ignore
+}
 
 export interface Guest {
   id: string;
@@ -32,6 +40,7 @@ export interface Guest {
   message: string | null;
   responded_at: string | null;
   created_at: string;
+  invited_by: 'julian' | 'janina';
 }
 
 function rowToGuest(row: Record<string, unknown>): Guest {
@@ -46,6 +55,7 @@ function rowToGuest(row: Record<string, unknown>): Guest {
     message: (row.message as string) || null,
     responded_at: (row.responded_at as string) || null,
     created_at: row.created_at as string,
+    invited_by: ((row.invited_by as string) === 'janina' ? 'janina' : 'julian'),
   };
 }
 
@@ -60,17 +70,17 @@ export async function getGuest(id: string): Promise<Guest | undefined> {
   return rowToGuest(result.rows[0] as unknown as Record<string, unknown>);
 }
 
-export async function createGuest(data: { id: string; name: string; email?: string; plus_one?: number }): Promise<Guest> {
+export async function createGuest(data: { id: string; name: string; email?: string; plus_one?: number; invited_by?: string }): Promise<Guest> {
   await db.execute({
-    sql: 'INSERT INTO guests (id, name, email, plus_one) VALUES (?, ?, ?, ?)',
-    args: [data.id, data.name, data.email || null, data.plus_one || 0],
+    sql: 'INSERT INTO guests (id, name, email, plus_one, invited_by) VALUES (?, ?, ?, ?, ?)',
+    args: [data.id, data.name, data.email || null, data.plus_one || 0, data.invited_by || 'julian'],
   });
   return (await getGuest(data.id))!;
 }
 
 export async function updateGuest(
   id: string,
-  data: Partial<Pick<Guest, 'name' | 'email' | 'plus_one' | 'status' | 'plus_one_name' | 'dietary' | 'message'>>
+  data: Partial<Pick<Guest, 'name' | 'email' | 'plus_one' | 'status' | 'plus_one_name' | 'dietary' | 'message' | 'invited_by'>>
 ): Promise<Guest | undefined> {
   const fields: string[] = [];
   const values: (string | number | null)[] = [];
@@ -82,6 +92,7 @@ export async function updateGuest(
   if (data.plus_one_name !== undefined) { fields.push('plus_one_name = ?'); values.push(data.plus_one_name); }
   if (data.dietary !== undefined) { fields.push('dietary = ?'); values.push(data.dietary); }
   if (data.message !== undefined) { fields.push('message = ?'); values.push(data.message); }
+  if (data.invited_by !== undefined) { fields.push('invited_by = ?'); values.push(data.invited_by); }
 
   if (fields.length === 0) return getGuest(id);
 

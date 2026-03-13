@@ -41,7 +41,7 @@ const { guest } = Astro.props;
 
   <!-- Hosts signature -->
   <p class="font-[var(--font-script)] text-3xl text-[var(--color-gold)]">
-    {EVENT.hosts}
+    {guest.invited_by === 'janina' ? 'Janina & Julian' : 'Julian & Janina'}
   </p>
 
   <!-- Divider -->

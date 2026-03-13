@@ -18,6 +18,7 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
     email: body.email,
     plus_one: body.plus_one,
     status: body.status,
+    invited_by: body.invited_by === 'janina' ? 'janina' : body.invited_by === 'julian' ? 'julian' : undefined,
   });
 
   return jsonResponse({ success: true, guest: updated });

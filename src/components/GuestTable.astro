@@ -13,6 +13,7 @@ const { guests } = Astro.props;
     <thead class="text-xs uppercase text-[var(--color-gold)] border-b border-[var(--color-form-border)]">
       <tr>
         <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Von</th>
         <th class="px-4 py-3">Status</th>
         <th class="px-4 py-3">Begleitung</th>
         <th class="px-4 py-3">Nachricht</th>
@@ -33,6 +34,9 @@ const { guests } = Astro.props;
           <td class="px-4 py-3 font-medium text-[var(--color-cream)]">
             {guest.name}
             {guest.email && <div class="text-xs opacity-50">{guest.email}</div>}
+          </td>
+          <td class="px-4 py-3 text-sm text-[var(--color-cream)] opacity-70">
+            {guest.invited_by === 'janina' ? 'Janina' : 'Julian'}
           </td>
           <td class="px-4 py-3">
             {guest.status === 'accepted' && <span class="badge-accepted">Zugesagt</span>}

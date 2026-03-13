@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   if (authError) return authError;
 
   const body = await request.json();
-  const { name, email, plus_one } = body;
+  const { name, email, plus_one, invited_by } = body;
 
   if (!name || typeof name !== 'string' || !name.trim()) {
     return jsonResponse({ error: 'Name ist erforderlich.' }, 400);
@@ -20,6 +20,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     name: name.trim(),
     email: email?.trim() || undefined,
     plus_one: plus_one ? 1 : 0,
+    invited_by: invited_by === 'janina' ? 'janina' : 'julian',
   });
 
   return jsonResponse({ success: true, guest, link: `${EVENT.base_url}/${guest.id}` }, 201);
