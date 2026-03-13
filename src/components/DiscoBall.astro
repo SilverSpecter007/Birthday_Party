@@ -14,6 +14,8 @@
           <pattern id="mirror-tiles" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
             <rect width="5" height="5" fill="#12101e" />
             <rect x="0.5" y="0.5" width="4" height="4" fill="#b2aac0" rx="0.15" />
+            <animateTransform attributeName="patternTransform" type="translate"
+              from="0 0" to="5 0" dur="0.65s" repeatCount="indefinite" calcMode="linear" />
           </pattern>
 
           <!-- Sphere clip -->
@@ -145,7 +147,6 @@
   .disco-ball-inner {
     display: flex;
     justify-content: center;
-    animation: disco-rotate 12s linear infinite;
     filter:
       drop-shadow(0 0 14px rgba(204, 158, 130, 0.30))
       drop-shadow(0 0 32px rgba(120, 102, 170, 0.20));
