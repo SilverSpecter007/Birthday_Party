@@ -77,10 +77,9 @@
     <div class="h-refl r3"></div>
     <div class="h-refl r4"></div>
     <div class="h-refl r5"></div>
-  </div>
 
-  <!-- Rotating light beams, origin = ball center -->
-  <div class="beams-anchor">
+    <!-- Light beams — inside hero-sway so they swing with the ball -->
+    <div class="beams-anchor">
     <svg class="beams-svg" viewBox="-380 0 760 520"
          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g class="beams-group">
@@ -105,6 +104,8 @@
       </g>
     </svg>
   </div>
+
+  </div><!-- end hero-sway -->
 
 </div>
 
@@ -155,11 +156,10 @@
   .r4 { width: 5px; height: 5px; background: rgba(210,165,135,0.95); box-shadow: 0 0 6px 2px rgba(204,158,130,0.55); bottom: 18px; right: -24px; --dur: 2.9s; --del: 0.3s; }
   .r5 { width: 3px; height: 3px; background: rgba(255,255,255,0.95); box-shadow: 0 0 3px 2px rgba(230,200,220,0.65); top: 58px; left: -24px; --dur: 1.5s; --del: 1.1s; }
 
-  /* Beams anchor: positioned so SVG origin is at ball center */
+  /* Beams anchor: inside hero-sway, origin at ball center (half of 96px = 48px) */
   .beams-anchor {
     position: absolute;
-    /* string(36) + half ball(48) = 84px from top of wrapper */
-    top: 84px;
+    top: 48px;
     left: 50%;
     width: 0;
     height: 0;
@@ -175,16 +175,6 @@
     max-width: 100vw;
     height: 520px;
     pointer-events: none;
-  }
-
-  .beams-group {
-    transform-origin: 0px 0px;
-    animation: beam-spin 14s linear infinite;
-  }
-
-  @keyframes beam-spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
   }
 
   @media (prefers-reduced-motion: reduce) {
