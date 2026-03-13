@@ -14,12 +14,24 @@
 
 <!-- Floating particles -->
 <div class="particles-container" aria-hidden="true">
-  <div class="particle" style="left: 10%; --delay: 0s; --duration: 14s;"></div>
-  <div class="particle" style="left: 25%; --delay: 3s; --duration: 11s;"></div>
-  <div class="particle" style="left: 50%; --delay: 7s; --duration: 16s;"></div>
-  <div class="particle" style="left: 70%; --delay: 2s; --duration: 13s;"></div>
-  <div class="particle" style="left: 85%; --delay: 5s; --duration: 15s;"></div>
-  <div class="particle" style="left: 40%; --delay: 9s; --duration: 12s;"></div>
+  <!-- Rosé gold -->
+  <div class="particle p-rose"   style="left: 10%; --delay: 0s;  --duration: 14s;"></div>
+  <div class="particle p-rose"   style="left: 62%; --delay: 6s;  --duration: 17s;"></div>
+  <!-- Soft violet -->
+  <div class="particle p-violet" style="left: 25%; --delay: 3s;  --duration: 11s;"></div>
+  <div class="particle p-violet" style="left: 78%; --delay: 8s;  --duration: 14s;"></div>
+  <!-- Warm white/cream -->
+  <div class="particle p-white"  style="left: 50%; --delay: 7s;  --duration: 16s;"></div>
+  <div class="particle p-white"  style="left: 88%; --delay: 1s;  --duration: 13s;"></div>
+  <!-- Lavender -->
+  <div class="particle p-lavender" style="left: 70%; --delay: 2s; --duration: 13s;"></div>
+  <div class="particle p-lavender" style="left: 35%; --delay: 10s; --duration: 15s;"></div>
+  <!-- Blush pink -->
+  <div class="particle p-blush"  style="left: 85%; --delay: 5s;  --duration: 15s;"></div>
+  <div class="particle p-blush"  style="left: 18%; --delay: 11s; --duration: 12s;"></div>
+  <!-- Amber -->
+  <div class="particle p-amber"  style="left: 40%; --delay: 9s;  --duration: 12s;"></div>
+  <div class="particle p-amber"  style="left: 55%; --delay: 4s;  --duration: 18s;"></div>
 </div>
 
 <style>
@@ -41,5 +53,34 @@
 
   .particle {
     bottom: -10px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+  }
+
+  /* Color variants with glow */
+  .p-rose {
+    background: #cc9e82;
+    box-shadow: 0 0 4px 1px rgba(204, 158, 130, 0.7);
+  }
+  .p-violet {
+    background: #9880cc;
+    box-shadow: 0 0 4px 1px rgba(152, 128, 204, 0.7);
+  }
+  .p-white {
+    background: #f5ede6;
+    box-shadow: 0 0 5px 1px rgba(245, 237, 230, 0.8);
+  }
+  .p-lavender {
+    background: #b8a8e0;
+    box-shadow: 0 0 4px 1px rgba(184, 168, 224, 0.65);
+  }
+  .p-blush {
+    background: #e8aab8;
+    box-shadow: 0 0 4px 1px rgba(232, 170, 184, 0.65);
+  }
+  .p-amber {
+    background: #ddb89e;
+    box-shadow: 0 0 4px 1px rgba(221, 184, 158, 0.65);
   }
 </style>
