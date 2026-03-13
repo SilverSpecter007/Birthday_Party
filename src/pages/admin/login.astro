@@ -35,40 +35,46 @@ if (Astro.request.method === 'POST') {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
 </head>
-<body class="min-h-screen bg-[var(--color-bg-dark)] flex items-center justify-center px-4">
+<body class="min-h-dvh bg-[var(--color-bg-dark)] flex items-center justify-center px-4"
+  style="background-image: radial-gradient(ellipse at 30% 20%, rgba(120,102,170,0.12) 0%, transparent 55%), radial-gradient(ellipse at 70% 80%, rgba(204,158,130,0.08) 0%, transparent 55%);">
   <div class="w-full max-w-sm">
-    <h1 class="font-[var(--font-display)] text-2xl text-[var(--color-gold)] text-center mb-8">
-      Admin-Bereich
-    </h1>
+    <!-- Logo / heading -->
+    <div class="text-center mb-8">
+      <p class="font-[var(--font-script)] text-4xl text-[var(--color-gold)] mb-1">Janina & Julian</p>
+      <p class="text-xs uppercase tracking-widest text-[var(--color-cream)] opacity-40">Gästeverwaltung</p>
+    </div>
 
-    {error && (
-      <div class="mb-4 p-3 bg-red-900/30 border border-red-500/30 rounded-lg text-red-300 text-sm text-center">
-        {error}
-      </div>
-    )}
+    <!-- Card -->
+    <div class="admin-card">
+      {error && (
+        <div class="mb-5 px-4 py-3 bg-red-950/40 border border-red-500/25 rounded-lg text-red-300 text-sm text-center">
+          {error}
+        </div>
+      )}
 
-    <form method="POST" class="space-y-4">
-      <div>
-        <label for="password" class="block text-sm font-medium text-[var(--color-cream)] mb-1">
-          Passwort
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          autofocus
-          class="w-full px-4 py-2 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
-          placeholder="Admin-Passwort"
-        />
-      </div>
-      <button
-        type="submit"
-        class="w-full py-2 bg-[var(--color-gold)] text-[var(--color-bg-dark)] font-bold rounded-lg hover:bg-[var(--color-gold-light)] transition-colors cursor-pointer"
-      >
-        Anmelden
-      </button>
-    </form>
+      <form method="POST" class="space-y-5">
+        <div>
+          <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-[var(--color-cream)] opacity-60 mb-2">
+            Passwort
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            autofocus
+            class="w-full px-4 py-3 bg-[var(--color-form-bg)] border border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40 focus:border-[var(--color-gold)] transition-all placeholder:opacity-30"
+            placeholder="••••••••"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3 bg-[var(--color-gold)] text-[var(--color-bg-dark)] font-bold rounded-lg hover:bg-[var(--color-gold-light)] active:scale-[0.98] transition-all cursor-pointer"
+        >
+          Anmelden
+        </button>
+      </form>
+    </div>
   </div>
 </body>
 </html>

@@ -10,22 +10,22 @@ interface Props {
 const { total, accepted, declined, pending, plusOnes } = Astro.props;
 ---
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-  <div class="admin-card text-center">
-    <div class="text-3xl font-bold text-[var(--color-gold)] font-[var(--font-display)]">{total}</div>
-    <div class="text-sm text-[var(--color-cream)] mt-1">Gesamt</div>
+  <div class="admin-card text-center py-5">
+    <div class="text-4xl font-bold text-[var(--color-gold)] font-[var(--font-display)] tabular-nums">{total}</div>
+    <div class="text-xs uppercase tracking-wider text-[var(--color-cream)] opacity-50 mt-2">Gesamt</div>
   </div>
-  <div class="admin-card text-center">
-    <div class="text-3xl font-bold text-green-400 font-[var(--font-display)]">{accepted}</div>
-    <div class="text-sm text-[var(--color-cream)] mt-1">
-      Zusagen {plusOnes > 0 && <span class="text-xs opacity-70">(+ {plusOnes} Begl.)</span>}
+  <div class="admin-card text-center py-5">
+    <div class="text-4xl font-bold font-[var(--font-display)] tabular-nums" style="color: #5ddfa8">{accepted}</div>
+    <div class="text-xs uppercase tracking-wider text-[var(--color-cream)] opacity-50 mt-2">
+      Zusagen{plusOnes > 0 && <span class="opacity-70"> (+{plusOnes})</span>}
     </div>
   </div>
-  <div class="admin-card text-center">
-    <div class="text-3xl font-bold text-red-400 font-[var(--font-display)]">{declined}</div>
-    <div class="text-sm text-[var(--color-cream)] mt-1">Absagen</div>
+  <div class="admin-card text-center py-5">
+    <div class="text-4xl font-bold font-[var(--font-display)] tabular-nums" style="color: #f48a8a">{declined}</div>
+    <div class="text-xs uppercase tracking-wider text-[var(--color-cream)] opacity-50 mt-2">Absagen</div>
   </div>
-  <div class="admin-card text-center">
-    <div class="text-3xl font-bold text-yellow-400 font-[var(--font-display)]">{pending}</div>
-    <div class="text-sm text-[var(--color-cream)] mt-1">Ausstehend</div>
+  <div class="admin-card text-center py-5">
+    <div class="text-4xl font-bold text-[var(--color-gold-light)] font-[var(--font-display)] tabular-nums">{pending}</div>
+    <div class="text-xs uppercase tracking-wider text-[var(--color-cream)] opacity-50 mt-2">Ausstehend</div>
   </div>
 </div>

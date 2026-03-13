@@ -51,7 +51,7 @@ const hasResponded = guest.status !== 'pending';
           <button
             type="button"
             id="btn-decline"
-            class="rsvp-choice-btn flex-1 py-3 px-4 border-2 border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] font-bold transition-all hover:bg-[rgba(201,168,76,0.1)] cursor-pointer"
+            class="rsvp-choice-btn flex-1 py-3 px-4 border-2 border-[var(--color-form-border)] rounded-lg text-[var(--color-cream)] font-bold transition-all hover:bg-[rgba(204,158,130,0.1)] cursor-pointer"
             data-status="declined"
           >
             Leider nicht &#x1F622;
@@ -151,7 +151,7 @@ const hasResponded = guest.status !== 'pending';
       if (allowPlusOne) plusOneField.classList.remove('hidden');
       dietaryField.classList.remove('hidden');
     } else {
-      btnDecline.classList.add('bg-[rgba(201,168,76,0.1)]');
+      btnDecline.classList.add('bg-[rgba(204,158,130,0.1)]');
       btnAccept.classList.remove('bg-[var(--color-gold)]', 'text-[var(--color-bg-dark)]');
       btnAccept.classList.add('opacity-50');
       btnDecline.classList.remove('opacity-50');

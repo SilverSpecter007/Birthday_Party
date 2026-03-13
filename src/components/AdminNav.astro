@@ -1,18 +1,20 @@
 ---
 const currentPath = Astro.url.pathname;
 ---
-<nav class="border-b border-[var(--color-form-border)] bg-[var(--color-bg-dark-lighter)]">
-  <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+<nav class="border-b border-[var(--color-form-border)] bg-[var(--color-bg-dark-lighter)]/90 backdrop-blur-sm sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-6">
-      <a href="/admin" class="font-[var(--font-display)] text-[var(--color-gold)] text-xl font-bold">
-        Gästeverwaltung
+      <a href="/admin" class="font-[var(--font-script)] text-[var(--color-gold)] text-2xl leading-none">
+        Janina & Julian
       </a>
-      <div class="flex gap-4 text-sm">
+      <div class="flex gap-1 text-sm">
         <a
           href="/admin"
           class:list={[
-            "hover:text-[var(--color-gold)] transition-colors",
-            currentPath === "/admin" || currentPath === "/admin/" ? "text-[var(--color-gold)]" : "text-[var(--color-cream)]"
+            "px-3 py-1.5 rounded-md transition-colors",
+            currentPath === "/admin" || currentPath === "/admin/"
+              ? "bg-[var(--color-form-bg)] text-[var(--color-gold)]"
+              : "text-[var(--color-cream)] opacity-60 hover:opacity-100 hover:text-[var(--color-gold)]"
           ]}
         >
           Dashboard
@@ -20,8 +22,10 @@ const currentPath = Astro.url.pathname;
         <a
           href="/admin/guests/new"
           class:list={[
-            "hover:text-[var(--color-gold)] transition-colors",
-            currentPath.includes("/guests/new") ? "text-[var(--color-gold)]" : "text-[var(--color-cream)]"
+            "px-3 py-1.5 rounded-md transition-colors",
+            currentPath.includes("/guests/new")
+              ? "bg-[var(--color-form-bg)] text-[var(--color-gold)]"
+              : "text-[var(--color-cream)] opacity-60 hover:opacity-100 hover:text-[var(--color-gold)]"
           ]}
         >
           + Neuer Gast
@@ -31,7 +35,7 @@ const currentPath = Astro.url.pathname;
     <form method="POST" action="/api/admin/logout">
       <button
         type="submit"
-        class="text-sm text-[var(--color-cream)] hover:text-[var(--color-gold)] transition-colors cursor-pointer"
+        class="text-xs uppercase tracking-wider text-[var(--color-cream)] opacity-40 hover:opacity-80 hover:text-[var(--color-gold)] transition-all cursor-pointer"
       >
         Abmelden
       </button>
