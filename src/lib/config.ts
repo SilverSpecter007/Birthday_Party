@@ -9,5 +9,5 @@ export const EVENT = {
   address: "",
   dresscode: "",
   description: "Wir werden 40 und das muss gefeiert werden!",
-  base_url: "https://deine-domain.de",
+  base_url: "https://birthday-party-umber.vercel.app",
 };
