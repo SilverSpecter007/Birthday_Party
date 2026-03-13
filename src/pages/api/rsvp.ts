@@ -1,24 +1,17 @@
 import type { APIRoute } from 'astro';
 import { getGuest, updateRsvp } from '../../lib/db';
+import { jsonResponse } from '../../lib/api';
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json();
   const { guestId, status, plusOneName, dietary, message } = body;
 
   if (!guestId || !status || !['accepted', 'declined'].includes(status)) {
-    return new Response(JSON.stringify({ error: 'Ungültige Anfrage.' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return jsonResponse({ error: 'Ungültige Anfrage.' }, 400);
   }
 
   const guest = await getGuest(guestId);
-  if (!guest) {
-    return new Response(JSON.stringify({ error: 'Gast nicht gefunden.' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  if (!guest) return jsonResponse({ error: 'Gast nicht gefunden.' }, 404);
 
   const updated = await updateRsvp(guestId, {
     status,
@@ -27,8 +20,5 @@ export const POST: APIRoute = async ({ request }) => {
     message,
   });
 
-  return new Response(JSON.stringify({ success: true, guest: updated }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return jsonResponse({ success: true, guest: updated });
 };

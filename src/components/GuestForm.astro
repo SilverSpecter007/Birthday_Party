@@ -134,6 +134,20 @@ const isEdit = mode === 'edit';
 
 <script define:vars={{ mode: mode, guestId: guest?.id || '' }}>
   const form = document.getElementById('guest-form');
+  const copyBtn = document.getElementById('copy-created-link');
+
+  // Wire up the copy button once — not inside the submit handler to avoid listener accumulation
+  let createdLink = '';
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(createdLink);
+      copyBtn.textContent = 'Kopiert!';
+      setTimeout(() => { copyBtn.textContent = 'Kopieren'; }, 2000);
+    } catch {
+      prompt('Link kopieren:', createdLink);
+    }
+  });
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
@@ -159,20 +173,9 @@ const isEdit = mode === 'edit';
     if (res.ok) {
       if (mode === 'create') {
         const result = await res.json();
-        const linkDiv = document.getElementById('created-link');
-        const linkDisplay = document.getElementById('link-display');
-        linkDisplay.textContent = result.link;
-        linkDiv.classList.remove('hidden');
-
-        document.getElementById('copy-created-link').addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(result.link);
-            document.getElementById('copy-created-link').textContent = 'Kopiert!';
-            setTimeout(() => { document.getElementById('copy-created-link').textContent = 'Kopieren'; }, 2000);
-          } catch {
-            prompt('Link kopieren:', result.link);
-          }
-        });
+        createdLink = result.link;
+        document.getElementById('link-display').textContent = result.link;
+        document.getElementById('created-link').classList.remove('hidden');
       } else {
         window.location.href = '/admin';
       }

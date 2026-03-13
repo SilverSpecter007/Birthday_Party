@@ -1,24 +1,26 @@
 import type { APIRoute } from 'astro';
 import { createGuest, generateGuestId } from '../../../../lib/db';
 import { EVENT } from '../../../../lib/config';
+import { jsonResponse, requireAuth } from '../../../../lib/api';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
+  const authError = requireAuth(cookies);
+  if (authError) return authError;
+
   const body = await request.json();
   const { name, email, plus_one } = body;
 
-  if (!name) {
-    return new Response(JSON.stringify({ error: 'Name ist erforderlich.' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  if (!name || typeof name !== 'string' || !name.trim()) {
+    return jsonResponse({ error: 'Name ist erforderlich.' }, 400);
   }
 
   const id = generateGuestId();
-  const guest = await createGuest({ id, name, email, plus_one: plus_one || 0 });
-  const link = `${EVENT.base_url}/${guest.id}`;
-
-  return new Response(JSON.stringify({ success: true, guest, link }), {
-    status: 201,
-    headers: { 'Content-Type': 'application/json' },
+  const guest = await createGuest({
+    id,
+    name: name.trim(),
+    email: email?.trim() || undefined,
+    plus_one: plus_one ? 1 : 0,
   });
+
+  return jsonResponse({ success: true, guest, link: `${EVENT.base_url}/${guest.id}` }, 201);
 };

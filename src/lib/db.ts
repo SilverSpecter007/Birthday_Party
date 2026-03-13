@@ -107,20 +107,24 @@ export async function deleteGuest(id: string): Promise<boolean> {
 }
 
 export async function getStats() {
-  const [totalR, acceptedR, declinedR, pendingR, plusOnesR] = await Promise.all([
-    db.execute('SELECT COUNT(*) as count FROM guests'),
-    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted'"),
-    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'declined'"),
-    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'pending'"),
-    db.execute("SELECT COUNT(*) as count FROM guests WHERE status = 'accepted' AND plus_one = 1 AND plus_one_name IS NOT NULL AND plus_one_name != ''"),
-  ]);
-
+  const result = await db.execute(`
+    SELECT
+      COUNT(*)                                                              AS total,
+      COUNT(CASE WHEN status = 'accepted' THEN 1 END)                      AS accepted,
+      COUNT(CASE WHEN status = 'declined' THEN 1 END)                      AS declined,
+      COUNT(CASE WHEN status = 'pending'  THEN 1 END)                      AS pending,
+      COUNT(CASE WHEN status = 'accepted' AND plus_one = 1
+                      AND plus_one_name IS NOT NULL
+                      AND plus_one_name != '' THEN 1 END)                  AS plus_ones
+    FROM guests
+  `);
+  const row = result.rows[0];
   return {
-    total: Number(totalR.rows[0].count),
-    accepted: Number(acceptedR.rows[0].count),
-    declined: Number(declinedR.rows[0].count),
-    pending: Number(pendingR.rows[0].count),
-    plusOnes: Number(plusOnesR.rows[0].count),
+    total:    Number(row.total),
+    accepted: Number(row.accepted),
+    declined: Number(row.declined),
+    pending:  Number(row.pending),
+    plusOnes: Number(row.plus_ones),
   };
 }
 

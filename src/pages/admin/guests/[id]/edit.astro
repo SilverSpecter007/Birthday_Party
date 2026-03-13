@@ -6,7 +6,7 @@ import { EVENT } from '../../../../lib/config';
 export const prerender = false;
 
 const { id } = Astro.params;
-const guest = id ? getGuest(id) : undefined;
+const guest = id ? await getGuest(id) : undefined;
 
 if (!guest) {
   return Astro.redirect('/admin');
