@@ -30,6 +30,17 @@ const currentPath = Astro.url.pathname;
         >
           + Neuer Gast
         </a>
+        <a
+          href="/admin/info"
+          class:list={[
+            "px-3 py-1.5 rounded-md transition-colors",
+            currentPath === "/admin/info"
+              ? "bg-[var(--color-form-bg)] text-[var(--color-gold)]"
+              : "text-[var(--color-cream)] opacity-60 hover:opacity-100 hover:text-[var(--color-gold)]"
+          ]}
+        >
+          Info-Seite
+        </a>
       </div>
     </div>
     <form method="POST" action="/api/admin/logout">

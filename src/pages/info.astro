@@ -1,0 +1,52 @@
+---
+import InvitationLayout from '../layouts/InvitationLayout.astro';
+import DancingFigures from '../components/DancingFigures.astro';
+import { getInfoContent } from '../lib/db';
+
+const content = await getInfoContent();
+---
+<InvitationLayout title="Party Info — Janina & Julian">
+  <div class="text-center space-y-6 pt-16 sm:pt-20 pb-24">
+
+    <!-- Heading -->
+    <h1 class="glitter-text font-[var(--font-display)] text-4xl sm:text-5xl font-black leading-tight">
+      Party Info
+    </h1>
+
+    <p class="font-[var(--font-script)] text-3xl text-[var(--color-gold)]">
+      Janina & Julian
+    </p>
+
+    <!-- Divider -->
+    <div class="flex items-center justify-center gap-4 py-1">
+      <div class="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-gold)]"></div>
+      <div class="w-2 h-2 rounded-full bg-[var(--color-gold)] opacity-60"></div>
+      <div class="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-gold)]"></div>
+    </div>
+
+    <!-- Info content -->
+    {content ? (
+      <div class="info-content text-[var(--color-cream-light)] text-base leading-relaxed text-left max-w-md mx-auto">
+        {content}
+      </div>
+    ) : (
+      <p class="text-[var(--color-cream)] opacity-40 text-sm italic">
+        Weitere Informationen folgen in Kürze.
+      </p>
+    )}
+
+  </div>
+
+  <DancingFigures />
+</InvitationLayout>
+
+<style>
+  .info-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: rgba(204, 158, 130, 0.06);
+    border: 1px solid rgba(204, 158, 130, 0.18);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+</style>

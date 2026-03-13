@@ -29,6 +29,14 @@ try {
   // Column already exists — ignore
 }
 
+// Settings table (key/value store for editable content)
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS settings (
+    key   TEXT PRIMARY KEY,
+    value TEXT NOT NULL DEFAULT ''
+  )
+`);
+
 export interface Guest {
   id: string;
   name: string;
@@ -137,6 +145,22 @@ export async function getStats() {
     pending:  Number(row.pending),
     plusOnes: Number(row.plus_ones),
   };
+}
+
+export async function getInfoContent(): Promise<string> {
+  const result = await db.execute({
+    sql: "SELECT value FROM settings WHERE key = 'info_content'",
+    args: [],
+  });
+  return result.rows.length > 0 ? ((result.rows[0].value as string) || '') : '';
+}
+
+export async function updateInfoContent(content: string): Promise<void> {
+  await db.execute({
+    sql: `INSERT INTO settings (key, value) VALUES ('info_content', ?)
+          ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    args: [content],
+  });
 }
 
 export function generateGuestId(): string {

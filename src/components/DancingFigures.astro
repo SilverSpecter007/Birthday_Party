@@ -1,0 +1,110 @@
+---
+---
+<div class="dancers-wrapper" aria-hidden="true">
+
+  <!-- Dancer 1 — left, rosé gold, Saturday Night Fever arm -->
+  <div class="dancer dancer-1">
+    <svg viewBox="0 0 50 72" width="52" height="72" xmlns="http://www.w3.org/2000/svg">
+      <!-- head -->
+      <circle cx="25" cy="10" r="8" fill="none" stroke="#cc9e82" stroke-width="2.2"/>
+      <!-- body -->
+      <line x1="25" y1="18" x2="25" y2="44" stroke="#cc9e82" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- right arm raised (disco point) -->
+      <line x1="25" y1="27" x2="44" y2="11" stroke="#cc9e82" stroke-width="2.2" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          values="-8 25 27; 6 25 27; -8 25 27" dur="0.9s"
+          repeatCount="indefinite" calcMode="spline"
+          keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" keyTimes="0;0.5;1"/>
+      </line>
+      <!-- left arm down-side -->
+      <line x1="25" y1="27" x2="9" y2="38" stroke="#cc9e82" stroke-width="2.2" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          values="6 25 27; -8 25 27; 6 25 27" dur="0.9s"
+          repeatCount="indefinite" calcMode="spline"
+          keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" keyTimes="0;0.5;1"/>
+      </line>
+      <!-- left leg -->
+      <line x1="25" y1="44" x2="13" y2="65" stroke="#cc9e82" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- right leg -->
+      <line x1="25" y1="44" x2="37" y2="65" stroke="#cc9e82" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Dancer 2 — right, violet, both arms up -->
+  <div class="dancer dancer-2">
+    <svg viewBox="0 0 50 72" width="52" height="72" xmlns="http://www.w3.org/2000/svg">
+      <!-- head -->
+      <circle cx="25" cy="10" r="8" fill="none" stroke="#b8a8e0" stroke-width="2.2"/>
+      <!-- body -->
+      <line x1="25" y1="18" x2="25" y2="44" stroke="#b8a8e0" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- left arm raised -->
+      <line x1="25" y1="27" x2="7" y2="13" stroke="#b8a8e0" stroke-width="2.2" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          values="10 25 27; -8 25 27; 10 25 27" dur="1.0s"
+          repeatCount="indefinite" calcMode="spline"
+          keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" keyTimes="0;0.5;1"/>
+      </line>
+      <!-- right arm raised -->
+      <line x1="25" y1="27" x2="43" y2="13" stroke="#b8a8e0" stroke-width="2.2" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          values="-10 25 27; 8 25 27; -10 25 27" dur="1.0s"
+          repeatCount="indefinite" calcMode="spline"
+          keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" keyTimes="0;0.5;1"/>
+      </line>
+      <!-- left leg -->
+      <line x1="25" y1="44" x2="13" y2="65" stroke="#b8a8e0" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- right leg -->
+      <line x1="25" y1="44" x2="37" y2="65" stroke="#b8a8e0" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+</div>
+
+<style>
+  .dancers-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 1.5rem;
+  }
+
+  .dancer {
+    opacity: 0.80;
+    filter: drop-shadow(0 0 8px rgba(204, 158, 130, 0.35));
+  }
+
+  .dancer-2 {
+    filter: drop-shadow(0 0 8px rgba(184, 168, 224, 0.40));
+  }
+
+  .dancer-1 {
+    transform-origin: bottom center;
+    animation: dance-1 0.9s ease-in-out infinite;
+  }
+
+  .dancer-2 {
+    transform-origin: bottom center;
+    animation: dance-2 0.9s ease-in-out infinite;
+    animation-delay: 0.45s;
+  }
+
+  @keyframes dance-1 {
+    0%, 100% { transform: rotate(-7deg) translateY(0); }
+    50%       { transform: rotate(5deg)  translateY(-9px); }
+  }
+
+  @keyframes dance-2 {
+    0%, 100% { transform: rotate(7deg)  translateY(-5px); }
+    50%       { transform: rotate(-5deg) translateY(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dancer-1, .dancer-2 { animation: none; }
+  }
+</style>
