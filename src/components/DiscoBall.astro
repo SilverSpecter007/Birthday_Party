@@ -8,12 +8,12 @@
   <div class="disco-sway">
     <!-- Ball (rotating) -->
     <div class="disco-ball-inner">
-      <svg viewBox="0 0 110 110" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 110 110" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- Mirror tile grid: 9×9 cells, 7.5px tile + 1.5px gap -->
-          <pattern id="mirror-tiles" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
-            <rect width="9" height="9" fill="#12101e" />
-            <rect x="0.75" y="0.75" width="7.5" height="7.5" fill="#b2aac0" rx="0.3" />
+          <!-- Mirror tile grid: 5×5 cells, 4px tile + 1px gap (fine!) -->
+          <pattern id="mirror-tiles" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+            <rect width="5" height="5" fill="#12101e" />
+            <rect x="0.5" y="0.5" width="4" height="4" fill="#b2aac0" rx="0.15" />
           </pattern>
 
           <!-- Sphere clip -->
@@ -68,26 +68,31 @@
         <!-- 3D shading over tiles -->
         <circle cx="55" cy="55" r="49" fill="url(#sphere-shade)" />
 
-        <!-- Bright flash tiles (lit mirrors) -->
+        <!-- Bright flash tiles — aligned to 5px grid, each = 1 tile (4×4) -->
         <g clip-path="url(#ball-clip)">
-          <!-- Bright white flashes -->
-          <rect x="24.75" y="24.75" width="7.5" height="7.5" fill="rgba(255,252,248,0.92)" rx="0.3" />
-          <rect x="51.75" y="15.75" width="7.5" height="7.5" fill="rgba(255,250,245,0.85)" rx="0.3" />
-          <rect x="33.75" y="42.75" width="7.5" height="7.5" fill="rgba(255,248,242,0.78)" rx="0.3" />
-          <rect x="69.75" y="33.75" width="7.5" height="7.5" fill="rgba(240,225,215,0.72)" rx="0.3" />
-          <rect x="15.75" y="51.75" width="7.5" height="7.5" fill="rgba(255,248,242,0.75)" rx="0.3" />
-          <rect x="78.75" y="51.75" width="7.5" height="7.5" fill="rgba(235,218,208,0.65)" rx="0.3" />
-          <rect x="42.75" y="60.75" width="7.5" height="7.5" fill="rgba(255,245,238,0.68)" rx="0.3" />
-          <rect x="60.75" y="69.75" width="7.5" height="7.5" fill="rgba(255,245,235,0.62)" rx="0.3" />
-          <rect x="33.75" y="78.75" width="7.5" height="7.5" fill="rgba(255,248,242,0.55)" rx="0.3" />
-          <!-- Rosé gold tinted tiles -->
-          <rect x="60.75" y="24.75" width="7.5" height="7.5" fill="rgba(204,158,130,0.60)" rx="0.3" />
-          <rect x="78.75" y="69.75" width="7.5" height="7.5" fill="rgba(204,158,130,0.50)" rx="0.3" />
-          <rect x="24.75" y="69.75" width="7.5" height="7.5" fill="rgba(204,158,130,0.45)" rx="0.3" />
-          <!-- Violet tinted tiles -->
-          <rect x="87.75" y="42.75" width="7.5" height="7.5" fill="rgba(180,160,220,0.50)" rx="0.3" />
-          <rect x="15.75" y="33.75" width="7.5" height="7.5" fill="rgba(180,160,220,0.45)" rx="0.3" />
-          <rect x="51.75" y="78.75" width="7.5" height="7.5" fill="rgba(160,140,210,0.40)" rx="0.3" />
+          <!-- Bright white/silver flashes -->
+          <rect x="25.5" y="25.5" width="4" height="4" fill="rgba(255,252,248,0.95)" rx="0.15" />
+          <rect x="50.5" y="15.5" width="4" height="4" fill="rgba(255,250,245,0.90)" rx="0.15" />
+          <rect x="35.5" y="45.5" width="4" height="4" fill="rgba(255,248,242,0.85)" rx="0.15" />
+          <rect x="70.5" y="35.5" width="4" height="4" fill="rgba(245,230,218,0.80)" rx="0.15" />
+          <rect x="15.5" y="50.5" width="4" height="4" fill="rgba(255,248,242,0.82)" rx="0.15" />
+          <rect x="80.5" y="50.5" width="4" height="4" fill="rgba(238,222,210,0.75)" rx="0.15" />
+          <rect x="40.5" y="60.5" width="4" height="4" fill="rgba(255,245,238,0.78)" rx="0.15" />
+          <rect x="60.5" y="70.5" width="4" height="4" fill="rgba(255,245,235,0.72)" rx="0.15" />
+          <rect x="30.5" y="75.5" width="4" height="4" fill="rgba(255,248,242,0.65)" rx="0.15" />
+          <rect x="20.5" y="35.5" width="4" height="4" fill="rgba(245,235,225,0.70)" rx="0.15" />
+          <rect x="75.5" y="25.5" width="4" height="4" fill="rgba(238,228,218,0.68)" rx="0.15" />
+          <rect x="55.5" y="85.5" width="4" height="4" fill="rgba(255,248,240,0.55)" rx="0.15" />
+          <!-- Rosé gold flashes -->
+          <rect x="60.5" y="25.5" width="4" height="4" fill="rgba(204,158,130,0.70)" rx="0.15" />
+          <rect x="80.5" y="70.5" width="4" height="4" fill="rgba(204,158,130,0.60)" rx="0.15" />
+          <rect x="25.5" y="70.5" width="4" height="4" fill="rgba(204,158,130,0.55)" rx="0.15" />
+          <rect x="45.5" y="20.5" width="4" height="4" fill="rgba(221,184,158,0.60)" rx="0.15" />
+          <!-- Violet flashes -->
+          <rect x="85.5" y="45.5" width="4" height="4" fill="rgba(180,160,220,0.58)" rx="0.15" />
+          <rect x="15.5" y="65.5" width="4" height="4" fill="rgba(180,160,220,0.52)" rx="0.15" />
+          <rect x="50.5" y="80.5" width="4" height="4" fill="rgba(160,140,210,0.48)" rx="0.15" />
+          <rect x="70.5" y="55.5" width="4" height="4" fill="rgba(190,170,230,0.45)" rx="0.15" />
         </g>
 
         <!-- Specular highlights on top -->
@@ -114,9 +119,10 @@
 <style>
   .disco-ball-wrapper {
     position: absolute;
-    top: -8px;
-    right: 1.5rem;
+    top: -10px;
+    right: 0.5rem;
     z-index: 10;
+    pointer-events: none;
   }
 
   .disco-string {
@@ -208,7 +214,7 @@
   }
 
   @media (max-width: 640px) {
-    .disco-ball-wrapper { right: 0.75rem; }
-    .disco-ball-inner svg { width: 72px; height: 72px; }
+    .disco-ball-wrapper { right: 0.25rem; }
+    .disco-ball-inner svg { width: 56px; height: 56px; }
   }
 </style>
