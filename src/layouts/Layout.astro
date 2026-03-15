@@ -2,28 +2,41 @@
 interface Props {
   title: string;
   description?: string;
+  canonical?: string;
 }
 
 const {
   title,
-  description = 'Salon Dueball - Ihr Friseur in Hollenstedt. Kreative Stylings, Colorationen, Balayage und mehr. Inhaberin & Meisterin Annika Dueball.',
+  description = 'Salon Dueball – Ihr Friseur in Hollenstedt seit 2013. Meisterbetrieb mit L\'Oréal Professionnel & Kevin Murphy. Haarschnitte, Colorationen, Balayage, Extensions & mehr. Jetzt Termin buchen!',
+  canonical,
 } = Astro.props;
+
+const siteUrl = 'https://www.friseur-hollenstedt.de';
+const canonicalUrl = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#2d2926" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Salon Dueball – Annika Dueball" />
+    <meta name="geo.region" content="DE-NI" />
+    <meta name="geo.placename" content="Hollenstedt" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <title>{title}</title>
 
     <!-- Open Graph -->
@@ -32,8 +45,56 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="Salon Dueball" />
+    <meta property="og:url" content={canonicalUrl} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Structured Data: LocalBusiness -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HairSalon",
+      "name": "Salon Dueball",
+      "description": "Friseurmeisterbetrieb in Hollenstedt seit 2013. Kreative Stylings, Colorationen, Balayage und mehr.",
+      "url": siteUrl,
+      "telephone": "+49-4165-8833",
+      "email": "salon.dueball@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Jahnstraße 3",
+        "addressLocality": "Hollenstedt",
+        "postalCode": "21279",
+        "addressRegion": "Niedersachsen",
+        "addressCountry": "DE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "53.3647",
+        "longitude": "9.7098"
+      },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "08:00", "closes": "18:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "09:00", "closes": "19:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "08:00", "closes": "18:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "18:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "13:00" }
+      ],
+      "priceRange": "€€",
+      "paymentAccepted": "Cash, EC-Cash, Visa, Mastercard, Gutschein",
+      "founder": {
+        "@type": "Person",
+        "name": "Annika Dueball",
+        "jobTitle": "Friseurmeisterin"
+      },
+      "sameAs": [
+        "https://www.instagram.com/salon_dueball_hollenstedt/",
+        "https://www.facebook.com/salon.dueball/"
+      ]
+    })} />
   </head>
-  <body>
+  <body class="font-body text-salon-dark bg-salon-cream antialiased overflow-x-hidden">
     <slot />
   </body>
 </html>

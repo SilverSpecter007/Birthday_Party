@@ -1,0 +1,84 @@
+---
+const team = [
+  {
+    name: 'Annika',
+    role: 'Inhaberin & Meisterin',
+    initial: 'A',
+    description: 'Führt den Salon seit 2013 mit Leidenschaft und Meisterhand. Spezialisiert auf Colorationen und individuelle Beratung.',
+    gradient: 'from-salon-gold/25 to-salon-gold/10',
+  },
+  {
+    name: 'Julian',
+    role: 'Stylist',
+    initial: 'J',
+    description: 'Konzentriert, präzise und mit ganz viel Leidenschaft bei der Arbeit. Kreative Schnitte sind seine Stärke.',
+    gradient: 'from-salon-rose/25 to-salon-rose/10',
+  },
+  {
+    name: 'Susan',
+    role: 'Coloristin',
+    initial: 'S',
+    description: 'Unsere Expertin für Strähnentechniken und Balayage. Verwandelt jede Haarfarbe in ein Kunstwerk.',
+    gradient: 'from-salon-sage/25 to-salon-sage/10',
+  },
+  {
+    name: 'Kim',
+    role: 'Stylistin',
+    initial: 'K',
+    description: 'Von frechen Kurzhaarschnitten bis eleganten Styles – Kim bringt jeden Look perfekt zur Geltung.',
+    gradient: 'from-warm-300/30 to-warm-200/15',
+  },
+];
+---
+
+<section id="team" class="section-padding bg-salon-dark relative overflow-hidden">
+  <!-- Background decorations -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-salon-gold/[0.04] rounded-full blur-[100px]"></div>
+  <div class="absolute bottom-0 left-0 w-80 h-80 bg-salon-rose/[0.04] rounded-full blur-[80px]"></div>
+
+  <div class="container-site relative z-10">
+    <div class="text-center mb-16 max-w-3xl mx-auto">
+      <div class="gold-line mx-auto mb-5"></div>
+      <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-5">
+        Unser Team
+      </h2>
+      <p class="text-lg text-warm-400 leading-relaxed">
+        Unser erfahrenes Team von Stylisten und Coloristen vereint Kreativität und Fachwissen,
+        um individuelle Haarlooks zu kreieren. Wir lieben unsere Arbeit und haben im Team immer viel Spaß.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {team.map((member) => (
+        <div class="group relative text-center p-8 rounded-2xl bg-white/[0.04] border border-white/[0.08]
+                    backdrop-blur-sm hover:bg-white/[0.08] hover:border-salon-gold/20
+                    transition-all duration-500 hover:-translate-y-1">
+          <!-- Avatar -->
+          <div class={`w-20 h-20 mx-auto rounded-full bg-gradient-to-br ${member.gradient}
+                      flex items-center justify-center mb-5 shadow-lg
+                      group-hover:scale-110 transition-transform duration-500`}>
+            <span class="font-display text-3xl font-bold text-salon-dark/70">{member.initial}</span>
+          </div>
+          <h3 class="text-xl font-display font-semibold text-white mb-1">{member.name}</h3>
+          <p class="text-salon-gold text-sm font-medium mb-4">{member.role}</p>
+          <p class="text-warm-500 text-sm leading-relaxed">{member.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Join CTA -->
+    <div class="mt-16 text-center p-8 md:p-12 rounded-3xl bg-gradient-to-r from-salon-gold/10 to-salon-rose/10
+                border border-white/[0.06]">
+      <h3 class="text-2xl font-display font-semibold text-white mb-3">
+        Werde Teil unseres Teams!
+      </h3>
+      <p class="text-warm-400 max-w-lg mx-auto mb-6">
+        Du hast eine Leidenschaft für kreative Haarkunst? Dann ist jetzt die perfekte Gelegenheit,
+        Teil unseres dynamischen Teams zu werden.
+      </p>
+      <a href="/jobs" class="btn-outline-light">
+        Jetzt bewerben
+      </a>
+    </div>
+  </div>
+</section>

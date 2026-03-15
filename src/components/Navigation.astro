@@ -1,34 +1,38 @@
 ---
 const navLinks = [
   { href: '#leistungen', label: 'Leistungen' },
-  { href: '#ueber-uns', label: '\u00dcber uns' },
-  { href: '#galerie', label: 'Galerie' },
-  { href: '#oeffnungszeiten', label: '\u00d6ffnungszeiten' },
+  { href: '#ueber-uns', label: 'Über uns' },
+  { href: '#team', label: 'Team' },
+  { href: '#oeffnungszeiten', label: 'Öffnungszeiten' },
   { href: '#kontakt', label: 'Kontakt' },
+  { href: '/jobs', label: 'Jobs' },
 ];
 ---
 
 <header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20 md:h-24">
+  <nav class="container-site px-4 sm:px-6 lg:px-8" aria-label="Hauptnavigation">
+    <div class="flex items-center justify-between h-20 lg:h-24">
       <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-full bg-salon-dark flex items-center justify-center
-                    group-hover:bg-warm-800 transition-colors duration-300">
-          <span class="text-salon-gold font-display text-sm font-semibold">SD</span>
+      <a href="/" class="flex items-center gap-3 group" aria-label="Salon Dueball – Startseite">
+        <div class="relative w-11 h-11 rounded-full bg-salon-dark flex items-center justify-center
+                    group-hover:bg-warm-800 transition-all duration-300 shadow-md">
+          <span class="text-salon-gold font-display text-base font-bold tracking-tight">SD</span>
+          <div class="absolute inset-0 rounded-full border border-salon-gold/30"></div>
         </div>
-        <div class="hidden sm:block">
-          <span class="font-display text-xl font-semibold text-salon-dark">Salon Dueball</span>
+        <div class="hidden sm:flex flex-col">
+          <span class="font-display text-lg font-semibold text-salon-dark leading-tight">Salon Dueball</span>
+          <span class="text-[10px] tracking-[0.2em] uppercase text-warm-400 font-medium">Friseur · Hollenstedt</span>
         </div>
       </a>
 
       <!-- Desktop Nav -->
-      <div class="hidden lg:flex items-center gap-8">
+      <div class="hidden lg:flex items-center gap-7">
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-sm font-medium text-warm-700 hover:text-salon-dark transition-colors duration-300
-                   relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5
+            class="text-[13px] font-semibold uppercase tracking-wider text-warm-600 hover:text-salon-dark
+                   transition-colors duration-300 relative
+                   after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px]
                    after:bg-salon-gold after:transition-all after:duration-300 hover:after:w-full"
           >
             {link.label}
@@ -38,7 +42,7 @@ const navLinks = [
           href="https://connect.shore.com/bookings/friseur-christina-aldag/services?locale=de"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-primary text-sm"
+          class="btn-gold text-sm ml-2"
         >
           Termin buchen
         </a>
@@ -47,13 +51,13 @@ const navLinks = [
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-btn"
-        class="lg:hidden flex flex-col gap-1.5 p-2"
-        aria-label="Men\u00fc \u00f6ffnen"
+        class="lg:hidden flex flex-col gap-[5px] p-2 relative z-50"
+        aria-label="Menü öffnen"
         aria-expanded="false"
       >
-        <span class="hamburger-line w-6 h-0.5 bg-salon-dark transition-all duration-300 origin-center"></span>
-        <span class="hamburger-line w-6 h-0.5 bg-salon-dark transition-all duration-300"></span>
-        <span class="hamburger-line w-4 h-0.5 bg-salon-dark transition-all duration-300 origin-center"></span>
+        <span class="hamburger-line block w-6 h-[2px] bg-salon-dark transition-all duration-300 origin-center"></span>
+        <span class="hamburger-line block w-6 h-[2px] bg-salon-dark transition-all duration-300"></span>
+        <span class="hamburger-line block w-4 h-[2px] bg-salon-dark transition-all duration-300 origin-center"></span>
       </button>
     </div>
   </nav>
@@ -61,14 +65,14 @@ const navLinks = [
   <!-- Mobile Menu -->
   <div
     id="mobile-menu"
-    class="lg:hidden fixed inset-0 top-20 bg-salon-cream/98 backdrop-blur-lg -translate-x-full
-           transition-transform duration-500 ease-in-out z-40"
+    class="lg:hidden fixed inset-0 bg-salon-cream z-40 flex flex-col items-center justify-center
+           opacity-0 pointer-events-none transition-opacity duration-500"
   >
-    <div class="flex flex-col items-center justify-center h-full gap-8 pb-20">
+    <div class="flex flex-col items-center gap-7">
       {navLinks.map((link) => (
         <a
           href={link.href}
-          class="mobile-link text-2xl font-display font-medium text-salon-dark
+          class="mobile-link text-2xl font-display font-semibold text-salon-dark
                  hover:text-salon-gold transition-colors duration-300"
         >
           {link.label}
@@ -78,10 +82,18 @@ const navLinks = [
         href="https://connect.shore.com/bookings/friseur-christina-aldag/services?locale=de"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-primary text-lg mt-4"
+        class="btn-gold text-lg mt-6"
       >
         Termin buchen
       </a>
+      <div class="flex items-center gap-4 mt-4">
+        <a href="tel:+4941658833" class="text-warm-500 hover:text-salon-gold transition-colors" aria-label="Anrufen">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/salon_dueball_hollenstedt/" target="_blank" rel="noopener noreferrer" class="text-warm-500 hover:text-salon-gold transition-colors" aria-label="Instagram">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </header>
@@ -94,32 +106,31 @@ const navLinks = [
   const hamburgerLines = document.querySelectorAll('.hamburger-line');
   let menuOpen = false;
 
-  // Scroll effect for navigation
   function handleScroll() {
     if (!nav) return;
-    if (window.scrollY > 50) {
+    if (window.scrollY > 60) {
       nav.classList.add('bg-salon-cream/95', 'backdrop-blur-md', 'shadow-sm');
     } else {
       nav.classList.remove('bg-salon-cream/95', 'backdrop-blur-md', 'shadow-sm');
     }
   }
-
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 
-  // Mobile menu toggle
   function toggleMenu() {
     menuOpen = !menuOpen;
     if (mobileMenu) {
-      mobileMenu.classList.toggle('-translate-x-full', !menuOpen);
-      mobileMenu.classList.toggle('translate-x-0', menuOpen);
+      if (menuOpen) {
+        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+      }
     }
-    if (mobileBtn) {
-      mobileBtn.setAttribute('aria-expanded', String(menuOpen));
-    }
+    mobileBtn?.setAttribute('aria-expanded', String(menuOpen));
     document.body.classList.toggle('overflow-hidden', menuOpen);
 
-    // Animate hamburger
     if (hamburgerLines.length === 3) {
       if (menuOpen) {
         (hamburgerLines[0] as HTMLElement).style.transform = 'rotate(45deg) translate(4px, 4px)';
@@ -136,11 +147,5 @@ const navLinks = [
   }
 
   mobileBtn?.addEventListener('click', toggleMenu);
-
-  // Close menu on link click
-  mobileLinks.forEach((link) => {
-    link.addEventListener('click', () => {
-      if (menuOpen) toggleMenu();
-    });
-  });
+  mobileLinks.forEach((link) => link.addEventListener('click', () => { if (menuOpen) toggleMenu(); }));
 </script>

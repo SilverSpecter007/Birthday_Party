@@ -1,108 +1,67 @@
 ---
+const impressions = [
+  { label: 'Modernes Salonambiente', sublabel: '2023 komplett renoviert', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', span: false },
+  { label: 'Wohlfühlatmosphäre', sublabel: 'Stil & Gemütlichkeit', icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', span: true },
+  { label: 'Premium Produkte', sublabel: "L'Oréal & Kevin Murphy", icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z', span: false },
+  { label: 'Kreative Colorationen', sublabel: 'Balayage & Strähnentechniken', icon: 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01', span: false },
+  { label: 'Persönliche Beratung', sublabel: 'Individuell für Sie', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z', span: false },
+];
 ---
 
-<section id="galerie" class="section-padding bg-salon-dark">
-  <div class="container-narrow">
-    <!-- Section Header -->
-    <div class="text-center mb-16">
-      <div class="decorative-line mx-auto mb-4"></div>
-      <h2 class="text-4xl md:text-5xl font-display font-semibold text-white mb-6">
+<section id="galerie" class="section-padding bg-gradient-to-b from-salon-cream to-warm-50">
+  <div class="container-site">
+    <div class="text-center mb-16 max-w-3xl mx-auto">
+      <div class="gold-line mx-auto mb-5"></div>
+      <h2 class="text-4xl md:text-5xl font-display font-bold text-salon-dark mb-5">
         Unser Salon
       </h2>
-      <p class="text-lg text-warm-400 max-w-2xl mx-auto">
-        2023 komplett renoviert &ndash; eine moderne, einladende Atmosph&auml;re,
-        in der Sie sich rundum wohlf&uuml;hlen.
+      <p class="text-lg text-warm-500 leading-relaxed">
+        Im Sommer 2023 komplett renoviert – eine moderne, einladende Atmosphäre,
+        in der Sie sich rundum wohlfühlen. Stil trifft Gemütlichkeit.
       </p>
     </div>
 
-    <!-- Gallery Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-      <!-- Placeholder cards representing salon impressions -->
-      <div class="group aspect-square rounded-2xl bg-gradient-to-br from-warm-800 to-warm-900
-                  border border-warm-700/30 overflow-hidden hover:scale-[1.02] transition-transform duration-500">
-        <div class="w-full h-full flex items-center justify-center p-6">
-          <div class="text-center space-y-3">
-            <svg class="w-10 h-10 mx-auto text-salon-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-            </svg>
-            <p class="text-warm-400 text-sm font-medium">Salonbereich</p>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+      {impressions.map((item) => (
+        <div class={`group relative rounded-2xl bg-gradient-to-br from-warm-200/80 to-warm-100/50
+                    border border-warm-200/40 overflow-hidden
+                    hover:shadow-xl hover:shadow-warm-200/30 hover:scale-[1.02]
+                    transition-all duration-500 cursor-default
+                    ${item.span ? 'md:row-span-2 aspect-auto min-h-[280px]' : 'aspect-square'}`}>
+          <div class="absolute inset-0 bg-gradient-to-t from-salon-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="w-full h-full flex items-center justify-center p-6">
+            <div class="text-center space-y-3">
+              <div class="w-14 h-14 mx-auto rounded-xl bg-salon-gold/15 flex items-center justify-center
+                          group-hover:bg-salon-gold/25 group-hover:scale-110 transition-all duration-500">
+                <svg class="w-7 h-7 text-salon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={item.icon} />
+                </svg>
+              </div>
+              <p class="text-salon-dark font-display font-semibold text-sm">{item.label}</p>
+              <p class="text-warm-400 text-xs">{item.sublabel}</p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="group aspect-square rounded-2xl bg-gradient-to-br from-warm-800 to-warm-900
-                  border border-warm-700/30 overflow-hidden hover:scale-[1.02] transition-transform duration-500
-                  md:row-span-2 md:aspect-auto">
-        <div class="w-full h-full flex items-center justify-center p-6">
-          <div class="text-center space-y-3">
-            <svg class="w-12 h-12 mx-auto text-salon-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <p class="text-warm-400 text-sm font-medium">Wohlfühlatmosphäre</p>
-            <p class="text-warm-500/60 text-xs">Modern & einladend</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="group aspect-square rounded-2xl bg-gradient-to-br from-warm-800 to-warm-900
-                  border border-warm-700/30 overflow-hidden hover:scale-[1.02] transition-transform duration-500">
-        <div class="w-full h-full flex items-center justify-center p-6">
-          <div class="text-center space-y-3">
-            <svg class="w-10 h-10 mx-auto text-salon-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
-            </svg>
-            <p class="text-warm-400 text-sm font-medium">Produkte</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="group aspect-square rounded-2xl bg-gradient-to-br from-warm-800 to-warm-900
-                  border border-warm-700/30 overflow-hidden hover:scale-[1.02] transition-transform duration-500">
-        <div class="w-full h-full flex items-center justify-center p-6">
-          <div class="text-center space-y-3">
-            <svg class="w-10 h-10 mx-auto text-salon-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-            </svg>
-            <p class="text-warm-400 text-sm font-medium">Styling</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="group aspect-square rounded-2xl bg-gradient-to-br from-warm-800 to-warm-900
-                  border border-warm-700/30 overflow-hidden hover:scale-[1.02] transition-transform duration-500">
-        <div class="w-full h-full flex items-center justify-center p-6">
-          <div class="text-center space-y-3">
-            <svg class="w-10 h-10 mx-auto text-salon-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
-            <p class="text-warm-400 text-sm font-medium">Beratung</p>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
 
     <!-- Instagram CTA -->
     <div class="text-center mt-12">
-      <a
-        href="https://www.instagram.com/salon_dueball_hollenstedt/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-3 text-salon-gold hover:text-white
-               transition-colors duration-300 font-medium"
-      >
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-        </svg>
-        Mehr auf Instagram entdecken
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-        </svg>
-      </a>
+      <p class="text-warm-400 text-sm mb-4">Folgen Sie uns für aktuelle Styles & Einblicke</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://www.instagram.com/salon_dueball_hollenstedt/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2.5 bg-white rounded-full px-6 py-3 shadow-sm border border-warm-100
+                  hover:shadow-md hover:border-salon-gold/20 transition-all duration-300 text-sm font-medium text-salon-dark">
+          <svg class="w-5 h-5 text-[#E4405F]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          @salon_dueball_hollenstedt
+        </a>
+        <a href="https://www.facebook.com/salon.dueball/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2.5 bg-white rounded-full px-6 py-3 shadow-sm border border-warm-100
+                  hover:shadow-md hover:border-salon-gold/20 transition-all duration-300 text-sm font-medium text-salon-dark">
+          <svg class="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+      </div>
     </div>
   </div>
 </section>

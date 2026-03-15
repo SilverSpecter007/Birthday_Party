@@ -3,21 +3,27 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
-import About from '../components/About.astro';
 import Brands from '../components/Brands.astro';
+import About from '../components/About.astro';
+import Team from '../components/Team.astro';
 import Gallery from '../components/Gallery.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 ---
 
-<Layout title="Salon Dueball | Friseur in Hollenstedt">
+<Layout
+  title="Salon Dueball | Friseur in Hollenstedt – Meisterbetrieb seit 2013"
+  description="Salon Dueball – Ihr Friseurmeisterbetrieb in Hollenstedt. Haarschnitte, Colorationen, Balayage, Extensions & Brow Lifting. Mit L'Oréal Professionnel & Kevin Murphy. Jetzt Termin buchen!"
+  canonical="/"
+>
   <Navigation />
   <main>
     <Hero />
     <Services />
     <Brands />
     <About />
+    <Team />
     <Gallery />
     <Contact />
   </main>

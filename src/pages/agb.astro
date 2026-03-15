@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout
+  title="AGB | Salon Dueball"
+  description="Allgemeine Geschäftsbedingungen von Salon Dueball – Friseur in Hollenstedt."
+  canonical="/agb"
+>
+  <Navigation />
+  <main class="pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="gold-line mb-5"></div>
+      <h1 class="text-4xl md:text-5xl font-display font-bold text-salon-dark mb-4">
+        Allgemeine Geschäfts­bedingungen
+      </h1>
+      <p class="text-warm-400 text-sm mb-10">Stand: April 2025</p>
+
+      <div class="space-y-8 text-warm-600 text-[16px] leading-relaxed">
+        <div>
+          <h2 class="text-lg font-display font-semibold text-salon-dark mb-3">1. Geltungsbereich</h2>
+          <p>
+            Die nachfolgenden AGB gelten für die Geschäftsbeziehung zwischen dem Kunden und dem
+            Friseur Salon Dueball, Jahnstraße 3, 21279 Hollenstedt.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-lg font-display font-semibold text-salon-dark mb-3">2. Leistungserbringung</h2>
+          <p>
+            Salon Dueball führt die Leistungen nach bestem Wissen und Gewissen und nach dem neuesten
+            Stand der Technik aus.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-lg font-display font-semibold text-salon-dark mb-3">3. Terminvereinbarung</h2>
+          <p>
+            Salon Dueball arbeitet hauptsächlich auf Terminbasis. Termine können persönlich, telefonisch
+            (04165-8833) oder über das Buchungstool auf der Homepage
+            <a href="https://www.friseur-hollenstedt.de" class="text-salon-gold hover:underline">www.friseur-hollenstedt.de</a>
+            vereinbart werden.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-lg font-display font-semibold text-salon-dark mb-3">4. Stornierung</h2>
+          <p>
+            Unbezahlte Termine können bis 24 Stunden vorher umgebucht oder storniert werden.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-lg font-display font-semibold text-salon-dark mb-3">5. Preise & Bezahlung</h2>
+          <p>
+            Die angegebenen Preise sind Mindestpreise und können sich durch Mehraufwand (z.B. langes oder
+            besonders dickes Haar) oder spontanes Hinzubuchen von weiteren Dienstleistungen erhöhen.
+            Aktuelle Preise können jederzeit unter
+            <a href="https://www.friseur-hollenstedt.de" class="text-salon-gold hover:underline">www.friseur-hollenstedt.de</a>
+            eingesehen werden.
+          </p>
+          <p class="mt-2">
+            Rechnungsbeträge sind sofort nach Leistungserfüllung fällig und ausschließlich in Bar,
+            per EC-Cash, Visa, Mastercard oder mit Gutschein zu bezahlen.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <a href="/" class="inline-flex items-center gap-2 text-warm-500 hover:text-salon-gold transition-colors font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Zurück zur Startseite
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

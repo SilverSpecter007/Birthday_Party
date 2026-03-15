@@ -1,118 +1,135 @@
 ---
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
-  <!-- Background with gradient overlay -->
+<section id="hero" class="relative min-h-[100svh] flex items-center overflow-hidden">
+  <!-- Layered background -->
   <div class="absolute inset-0 bg-gradient-to-br from-warm-100 via-salon-cream to-warm-50"></div>
+  <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-salon-gold/[0.07] rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-salon-rose/[0.08] rounded-full blur-[100px]"></div>
 
-  <!-- Decorative elements -->
-  <div class="absolute top-20 right-0 w-96 h-96 bg-salon-gold/10 rounded-full blur-3xl"></div>
-  <div class="absolute bottom-0 left-0 w-80 h-80 bg-salon-rose/10 rounded-full blur-3xl"></div>
-  <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-salon-sage/5 rounded-full blur-2xl"></div>
+  <!-- Grid pattern overlay -->
+  <div class="absolute inset-0 opacity-[0.03]"
+       style="background-image: radial-gradient(circle, #2d2926 1px, transparent 1px); background-size: 40px 40px;"></div>
 
-  <!-- Content -->
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <!-- Text Content -->
-      <div class="space-y-8">
-        <div class="space-y-2 animate-fade-in-up" style="opacity: 0;">
-          <div class="decorative-line"></div>
-          <p class="text-salon-gold font-medium tracking-widest uppercase text-sm">
-            Friseur in Hollenstedt
+  <div class="relative z-10 container-site px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
+    <div class="grid lg:grid-cols-5 gap-12 lg:gap-8 items-center">
+      <!-- Text: 3 columns -->
+      <div class="lg:col-span-3 space-y-8">
+        <div class="space-y-3 animate-fade-in-up" style="opacity: 0;">
+          <div class="gold-line"></div>
+          <p class="text-salon-gold font-semibold tracking-[0.25em] uppercase text-xs">
+            Friseurmeisterbetrieb seit 2013
           </p>
         </div>
 
-        <h1 class="text-5xl sm:text-6xl md:text-7xl font-display font-semibold leading-tight
-                    text-salon-dark animate-fade-in-up animate-delay-100" style="opacity: 0;">
-          Salon<br />
-          <span class="text-salon-gold italic">Dueball</span>
+        <h1 class="animate-fade-in-up animate-delay-100" style="opacity: 0;">
+          <span class="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-bold leading-[1.05] text-salon-dark">
+            Salon
+          </span>
+          <span class="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-bold leading-[1.05]
+                       bg-gradient-to-r from-salon-gold to-[#a8885c] bg-clip-text text-transparent italic">
+            Dueball
+          </span>
         </h1>
 
-        <p class="text-lg md:text-xl text-warm-600 max-w-lg leading-relaxed
-                  animate-fade-in-up animate-delay-200" style="opacity: 0;">
-          Kreative Stylings, meisterhafte Colorationen und pers&ouml;nliche Beratung &ndash;
-          seit 2013 Ihr Salon f&uuml;r perfekte Haarpflege und neueste Trends.
+        <p class="text-lg lg:text-xl text-warm-500 max-w-xl leading-relaxed animate-fade-in-up animate-delay-200" style="opacity: 0;">
+          Kreative Stylings, meisterhafte Colorationen und persönliche Beratung in Hollenstedt.
+          Wo Stil auf Persönlichkeit trifft – mit L'Oréal Professionnel & Kevin Murphy.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up animate-delay-300" style="opacity: 0;">
+        <div class="flex flex-col sm:flex-row gap-4 pt-2 animate-fade-in-up animate-delay-300" style="opacity: 0;">
           <a
             href="https://connect.shore.com/bookings/friseur-christina-aldag/services?locale=de"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-primary text-base"
+            class="btn-gold text-base"
           >
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
             </svg>
-            Termin buchen
+            Jetzt Termin buchen
           </a>
-          <a href="#leistungen" class="btn-outline text-base">
-            Unsere Leistungen
+          <a href="tel:+4941658833" class="btn-outline text-base">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            04165 / 88 33
           </a>
         </div>
 
-        <!-- Trust indicators -->
-        <div class="flex items-center gap-8 pt-4 animate-fade-in-up animate-delay-400" style="opacity: 0;">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-salon-gold" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <span class="text-sm text-warm-600">Meisterbetrieb</span>
+        <!-- Trust badges -->
+        <div class="flex flex-wrap items-center gap-6 pt-6 animate-fade-in-up animate-delay-400" style="opacity: 0;">
+          <div class="flex items-center gap-2.5 bg-white/60 rounded-full px-4 py-2 shadow-sm">
+            <div class="w-8 h-8 rounded-full bg-salon-gold/15 flex items-center justify-center">
+              <svg class="w-4 h-4 text-salon-gold" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold text-salon-dark">Meisterbetrieb</span>
           </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-salon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span class="text-sm text-warm-600">Seit 2013</span>
+          <div class="flex items-center gap-2.5 bg-white/60 rounded-full px-4 py-2 shadow-sm">
+            <div class="w-8 h-8 rounded-full bg-salon-gold/15 flex items-center justify-center">
+              <span class="text-salon-gold text-[10px] font-bold">L'P</span>
+            </div>
+            <span class="text-xs font-semibold text-salon-dark">L'Oréal Partner</span>
+          </div>
+          <div class="flex items-center gap-2.5 bg-white/60 rounded-full px-4 py-2 shadow-sm">
+            <div class="w-8 h-8 rounded-full bg-salon-gold/15 flex items-center justify-center">
+              <span class="text-salon-gold text-[10px] font-bold">KM</span>
+            </div>
+            <span class="text-xs font-semibold text-salon-dark">Kevin Murphy</span>
           </div>
         </div>
       </div>
 
-      <!-- Visual Element -->
-      <div class="hidden lg:flex justify-center items-center animate-fade-in-up animate-delay-200" style="opacity: 0;">
+      <!-- Visual: 2 columns -->
+      <div class="lg:col-span-2 hidden lg:block animate-fade-in animate-delay-300" style="opacity: 0;">
         <div class="relative">
-          <!-- Abstract salon illustration -->
-          <div class="w-[400px] h-[500px] rounded-[2rem] bg-gradient-to-br from-warm-200 via-warm-100 to-salon-cream
-                      border border-warm-200 shadow-2xl shadow-warm-200/50 overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="text-center space-y-6 p-8">
-                <div class="w-24 h-24 mx-auto rounded-full bg-salon-gold/20 flex items-center justify-center">
-                  <svg class="w-12 h-12 text-salon-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                          d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div class="space-y-3">
+          <div class="w-full aspect-[3/4] rounded-[2rem] bg-gradient-to-br from-warm-200 via-warm-100 to-warm-50
+                      border border-warm-200/80 shadow-2xl shadow-warm-300/30 overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center p-10">
+              <div class="text-center space-y-8">
+                <!-- Scissors SVG -->
+                <svg class="w-20 h-20 mx-auto text-salon-gold/50" viewBox="0 0 100 100" fill="currentColor">
+                  <path d="M30 20c-8.3 0-15 6.7-15 15s6.7 15 15 15c3 0 5.8-.9 8.2-2.4L50 57l-11.8 9.4C35.8 64.9 33 64 30 64c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15c0-3-.9-5.8-2.4-8.2L50 63l35-27h-12L50 52 35.5 38.8C37.1 36.2 38 33.2 38 30c0-8.3-6.7-15-15-15h7zm0 22c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7zm0 44c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7zM73 63h12L50 84l-4-3.5L73 63z"/>
+                </svg>
+                <div class="space-y-4">
                   <p class="font-display text-3xl font-semibold text-salon-dark">Willkommen</p>
-                  <div class="w-12 h-0.5 bg-salon-gold mx-auto"></div>
-                  <p class="font-display text-lg text-warm-500 italic">
-                    Wo Stil auf<br />Pers&ouml;nlichkeit trifft
+                  <div class="w-14 h-[2px] bg-gradient-to-r from-salon-gold to-salon-gold/30 mx-auto"></div>
+                  <p class="font-display text-lg text-warm-500 italic leading-relaxed">
+                    „Wir verstehen unser<br />Handwerk und<br />Ihre Wünsche"
                   </p>
-                </div>
-                <!-- Decorative scissors icon -->
-                <div class="pt-4">
-                  <svg class="w-16 h-16 mx-auto text-salon-gold/40" viewBox="0 0 64 64" fill="currentColor">
-                    <path d="M20 12c-4.4 0-8 3.6-8 8s3.6 8 8 8c1.8 0 3.5-.6 4.9-1.7L32 32l-7.1 5.7c-1.4-1-3.1-1.7-4.9-1.7-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8c0-1.8-.6-3.5-1.7-4.9L32 34l22-17h-8L32 28 20.7 18.3c1-1.4 1.7-3.1 1.7-4.9-.4-4.8-4-8.4-8.4-8.4zM20 24c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0 28c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zM46 34h8L32 49.4 29.2 47 46 34z"/>
-                  </svg>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Decorative floating elements -->
-          <div class="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-salon-gold/20 blur-sm"></div>
-          <div class="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-salon-rose/20 blur-sm"></div>
+          <div class="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-salon-gold/15 blur-xl"></div>
+          <div class="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-salon-rose/15 blur-xl"></div>
+          <!-- Floating badge -->
+          <div class="absolute -bottom-3 -right-3 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-salon-gold flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-salon-dark">Seit 2013</p>
+              <p class="text-[11px] text-warm-400">in Hollenstedt</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-    <a href="#leistungen" class="text-warm-400 hover:text-salon-gold transition-colors">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2">
+    <a href="#leistungen" class="flex flex-col items-center gap-2 text-warm-400 hover:text-salon-gold transition-colors group">
+      <span class="text-[10px] tracking-[0.2em] uppercase font-medium">Entdecken</span>
+      <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
       </svg>
     </a>
   </div>
